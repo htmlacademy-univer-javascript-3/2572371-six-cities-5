@@ -1,9 +1,9 @@
 import { Navigate } from 'react-router-dom';
 import React from 'react';
 
-class PrivateRouteProps {
-  children: React.ReactElement | null = null;
-  childrenWhenNotLogged: React.ReactElement | null = null;
+type PrivateRouteProps = {
+  children: React.ReactElement | null;
+  childrenWhenNotLogged: React.ReactElement | null;
 }
 
 function PrivateRoute({ children, childrenWhenNotLogged } : PrivateRouteProps) {

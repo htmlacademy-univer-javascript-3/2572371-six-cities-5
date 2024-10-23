@@ -1,7 +1,7 @@
 import Card from '../Card/Card.tsx';
 
-class MainPageProps {
-  OffersCount: number = 0;
+type MainPageProps = {
+  OffersCount: number;
 }
 
 function MainPage(props: MainPageProps) {
@@ -95,7 +95,7 @@ function MainPage(props: MainPageProps) {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <Card ImagePath={'img/apartment-01.jpg'} Price={120} Bookmarked={false} Premium Description={'Beautiful &amp; luxurious apartment at great location'} Type={'Apartment'} />
+                <Card ImagePath={'img/apartment-01.jpg'} Price={120} Bookmarked={false} Description={'Beautiful &amp; luxurious apartment at great location'} Type={'Apartment'} Premium/>
                 <Card ImagePath={'img/room.jpg'} Price={80} Bookmarked Premium={false} Description={'Wood and stone place'} Type={'Room'} />
                 <Card ImagePath={'img/apartment-02.jpg'} Price={132} Bookmarked={false} Premium={false} Description={'Canal View Prinsengracht'} Type={'Apartment'} />
                 <Card ImagePath={'img/apartment-03.jpg'} Price={180} Bookmarked={false} Premium Description={'Nice, cozy, warm big bed apartment'} Type={'Apartment'} />
