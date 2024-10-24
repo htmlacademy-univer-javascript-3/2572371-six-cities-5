@@ -7,7 +7,7 @@ type PrivateRouteProps = {
 }
 
 function PrivateRoute({ children, childrenWhenNotLogged } : PrivateRouteProps) {
-  const isAuthenticated = false;
+  const isAuthenticated = true;
 
   return isAuthenticated ? children : childrenWhenNotLogged || <Navigate to="/login" />;
 }
