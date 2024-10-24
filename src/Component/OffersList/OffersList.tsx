@@ -14,6 +14,7 @@ function OffersList({Offers}: OffersListProps) {
       {
         Offers.map((offer) => (
           <Card
+            Id={offer.id}
             key={offer.id}
             ImagePath={offer.image}
             Price={offer.price}
