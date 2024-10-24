@@ -1,12 +1,12 @@
 import React from 'react';
 
-class CardProps {
-  Premium: boolean = false;
-  Description: string = '';
-  Type: string = '';
-  ImagePath: string = '';
-  Bookmarked: boolean = false;
-  Price: number = 0;
+type CardProps = {
+  Premium: boolean;
+  Description: string;
+  Type: string;
+  ImagePath: string;
+  Bookmarked: boolean;
+  Price: number;
 }
 
 function Card(props: CardProps): React.ReactElement {
