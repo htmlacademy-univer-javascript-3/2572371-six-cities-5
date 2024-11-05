@@ -1,47 +1,42 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import AppRoutes from '../../Constants/Routes.ts';
 
-type CardProps = {
+type FavoritesCardProps = {
   Premium: boolean;
   Description: string;
   Type: string;
   ImagePath: string;
-  Bookmarked: boolean;
   Price: number;
-  Id: number;
-  onMouseOver: () => void;
 }
 
-function Card(props: CardProps): React.ReactElement {
+function FavoritesCard(props: FavoritesCardProps): React.ReactElement {
   return (
-    <article className="cities__card place-card" onMouseOver={props.onMouseOver}>
+    <article className="favorites__card place-card">
       {props.Premium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       )}
-      <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`${AppRoutes.Offer}${props.Id}`}>
+      <div className="favorites__image-wrapper place-card__image-wrapper">
+        <a href="#">
           <img className="place-card__image" src={props.ImagePath} width="260" height="200" alt="Place image"/>
-        </Link>
+        </a>
       </div>
-      <div className="place-card__info">
+      <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{props.Price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`place-card__bookmark-button${props.Bookmarked && '--active'} button`} type="button">
+          <button className={'place-card__bookmark-button--active button'} type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span className="visually-hidden">{props.Bookmarked ? 'In Bookmarks' : 'To bookmarks'}</span>
+            <span className="visually-hidden">In bookmarks</span>
           </button>
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: 80}}></span>
+            <span style={{width: 100}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
@@ -54,4 +49,4 @@ function Card(props: CardProps): React.ReactElement {
   );
 }
 
-export default Card;
+export default FavoritesCard;
