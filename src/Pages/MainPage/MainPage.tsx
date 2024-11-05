@@ -1,5 +1,6 @@
 import Offer from '../../Mocks/offers.ts';
 import OffersList from '../../Component/OffersList/OffersList.tsx';
+import Map from '../../Component/Map/MapComponent.tsx';
 
 type MainPageProps = {
   OffersCount: number;
@@ -69,7 +70,9 @@ function MainPage(props: MainPageProps) {
             <OffersList Offers={props.Offers}/>
           </section>
           <div className="cities__right-section">
-            <section className="cities__map map"></section>
+            <section style={{alignSelf: 'stretch', width: '100%'}}>
+              <Map offers={props.Offers} selectedOffer={props.Offers[0]}/>
+            </section>
           </div>
         </div>
       </div>
