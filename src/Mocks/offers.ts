@@ -9,6 +9,8 @@ type Offer = {
   isFavorite: boolean;
   isPremium: boolean;
   type: OfferType;
+  longitude: number;
+  latitude: number;
 }
 
 type OfferType = 'Apartment' | 'Room';
@@ -25,6 +27,8 @@ export const offersMocks: Offer[] = [
     isFavorite: false,
     isPremium: true,
     type: 'Apartment',
+    latitude: 52.3909553943508,
+    longitude: 4.85309666406198,
   },
   {
     id: 2,
@@ -37,6 +41,8 @@ export const offersMocks: Offer[] = [
     isFavorite: true,
     isPremium: false,
     type: 'Room',
+    latitude: 52.3609553943508,
+    longitude: 4.85309666406198
   },
   {
     id: 3,
@@ -49,6 +55,8 @@ export const offersMocks: Offer[] = [
     isFavorite: false,
     isPremium: false,
     type: 'Apartment',
+    latitude: 52.3909553943508,
+    longitude: 4.929309666406198
   },
   {
     id: 4,
@@ -61,6 +69,8 @@ export const offersMocks: Offer[] = [
     isFavorite: false,
     isPremium: false,
     type: 'Apartment',
+    latitude: 52.3809553943508,
+    longitude: 4.939309666406198
   },
 ];
 
