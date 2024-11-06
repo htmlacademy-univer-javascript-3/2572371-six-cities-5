@@ -1,16 +1,17 @@
 import Card from '../Card/Card.tsx';
-import Offer from '../../Mocks/offers.ts';
 import { useState } from 'react';
+import Offer from '../../Types/Offer.ts';
 
 type OffersListProps = {
   Offers: Offer[];
+  ClassName?: string;
 }
 
-function OffersList({Offers}: OffersListProps) {
+function OffersList({Offers, ClassName}: OffersListProps) {
   const [, updateActiveOfferId] = useState<number | null>(null);
 
   return (
-    <div className="cities__places-list places__list tabs__content">
+    <div className={ClassName || 'cities__places-list places__list tabs__content'}>
       {
         Offers.map((offer) => (
           <Card

@@ -1,5 +1,5 @@
 import FavoritesList from '../../Component/FavoritesList/FavoritesList.tsx';
-import Offer from '../../Mocks/offers.ts';
+import Offer from '../../Types/Offer.ts';
 
 function FavoritesPage({offers}: { offers: Offer[] }) {
   return (

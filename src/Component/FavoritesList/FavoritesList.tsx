@@ -1,5 +1,5 @@
-import Offer from '../../Mocks/offers.ts';
 import FavoritesCard from '../FavoritesCard/FavoritesCard.tsx';
+import Offer from '../../Types/Offer.ts';
 
 function groupByLocation(offers: Offer[]): { [key: string]: Offer[] } {
   return offers.reduce((acc, offer) => {

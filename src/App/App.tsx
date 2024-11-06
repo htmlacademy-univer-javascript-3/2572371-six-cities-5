@@ -1,5 +1,4 @@
 import MainPage from '../Pages/MainPage/MainPage.tsx';
-import Offer from '../Mocks/offers.ts';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import LoginPage from '../Pages/LoginPage/LoginPage.tsx';
 import PrivateRoute from '../Component/PrivateRoute/PrivateRoute.tsx';
@@ -10,6 +9,8 @@ import NotFoundPage from '../Pages/NotFoundPage/NotFoundPage.tsx';
 import React from 'react';
 import AppRoutes from '../Constants/Routes.ts';
 import Layout from '../Pages/Layout/Layout.tsx';
+import Offer from '../Types/Offer.ts';
+import {offersMocks, reviewsMocks} from '../Mocks/Mocks.ts';
 
 type AppData = {
   OffersCount: number;
@@ -42,7 +43,7 @@ function App({OffersCount, Offers}: AppData): React.ReactElement {
             element={
               <PrivateRoute childrenWhenNotLogged={<OfferNotLoggedPage/>}>
                 <Layout>
-                  <OfferPage/>
+                  <OfferPage reviews={reviewsMocks} nearbyOffers={offersMocks.slice(0, 3)}/>
                 </Layout>
               </PrivateRoute>
             }

@@ -1,19 +1,16 @@
-type Offer = {
-  id: number;
-  title: string;
-  description: string;
-  price: number;
-  image: string;
-  location: string;
-  date: string;
-  isFavorite: boolean;
-  isPremium: boolean;
-  type: OfferType;
-  longitude: number;
-  latitude: number;
-}
+import Offer from '../Types/Offer';
+import UserReview from '../Types/UserReview';
 
-type OfferType = 'Apartment' | 'Room';
+export const reviewsMocks: UserReview[] = [
+  {
+    id: 1,
+    name: 'Max',
+    avatar: 'img/avatar-max.jpg',
+    rating: 80,
+    date: new Date('2019-04-24'),
+    text: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.'
+  },
+];
 
 export const offersMocks: Offer[] = [
   {
@@ -74,4 +71,4 @@ export const offersMocks: Offer[] = [
   },
 ];
 
-export default Offer;
+export type {Offer, UserReview};

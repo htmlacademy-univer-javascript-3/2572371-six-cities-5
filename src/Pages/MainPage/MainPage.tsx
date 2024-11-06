@@ -1,6 +1,6 @@
-import Offer from '../../Mocks/offers.ts';
 import OffersList from '../../Component/OffersList/OffersList.tsx';
 import Map from '../../Component/Map/MapComponent.tsx';
+import Offer from '../../Types/Offer.ts';
 
 type MainPageProps = {
   OffersCount: number;
