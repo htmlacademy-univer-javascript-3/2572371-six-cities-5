@@ -31,7 +31,7 @@ function MainPage() {
           </section>
           <div className="cities__right-section">
             <section style={{alignSelf: 'stretch', width: '100%'}}>
-              <Map offers={offers} selectedOffer={activeCard ?? offers[0]}/>
+              <Map offers={offers} selectedOffer={activeCard}/>
             </section>
           </div>
         </div>
