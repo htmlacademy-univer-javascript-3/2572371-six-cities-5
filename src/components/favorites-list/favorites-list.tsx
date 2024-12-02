@@ -3,7 +3,7 @@ import Offer from '../../types/offer.ts';
 
 function groupByLocation(offers: Offer[]): { [key: string]: Offer[] } {
   return offers.reduce((acc, offer) => {
-    const country = offer.location;
+    const country = offer.location.name;
     if (!acc[country]) {
       acc[country] = [];
     }
