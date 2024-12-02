@@ -11,21 +11,22 @@ import AppRoutes from '../constants/routes.ts';
 import Layout from '../pages/layout/layout.tsx';
 import Offer from '../types/offer.ts';
 import {offersMocks, reviewsMocks} from '../mocks/mocks.ts';
+import {Provider} from 'react-redux';
+import {store} from '../store/store.ts';
 
 type AppData = {
-  OffersCount: number;
   Offers: Offer[];
 }
 
-function App({OffersCount, Offers}: AppData): React.ReactElement {
+function App({Offers}: AppData): React.ReactElement {
   return (
-    <React.StrictMode>
+    <Provider store={store}>
       <BrowserRouter>
         <Routes>
           <Route path={AppRoutes.Main}
             element={
               <Layout>
-                <MainPage OffersCount={OffersCount} Offers={Offers}/>
+                <MainPage />
               </Layout>
             }
           />
@@ -51,7 +52,7 @@ function App({OffersCount, Offers}: AppData): React.ReactElement {
           <Route path="*" element={<Layout><NotFoundPage/></Layout>}/>
         </Routes>
       </BrowserRouter>
-    </React.StrictMode>
+    </Provider>
   );
 }
 

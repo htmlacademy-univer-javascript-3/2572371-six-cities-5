@@ -1,15 +1,13 @@
 import Card from '../card/card.tsx';
-import { useState } from 'react';
 import Offer from '../../types/offer.ts';
 
 type OffersListProps = {
   Offers: Offer[];
   ClassName?: string;
+  SetActiveOffer: (offer: Offer) => void;
 }
 
-function OffersList({Offers, ClassName}: OffersListProps) {
-  const [, updateActiveOfferId] = useState<number | null>(null);
-
+function OffersList({Offers, ClassName, SetActiveOffer}: OffersListProps) {
   return (
     <div className={ClassName || 'cities__places-list places__list tabs__content'}>
       {
@@ -23,7 +21,7 @@ function OffersList({Offers, ClassName}: OffersListProps) {
             Description={offer.description}
             Type={'Apartment'}
             Premium={offer.isPremium}
-            onMouseOver={() => updateActiveOfferId(offer.id)}
+            onMouseOver={() => SetActiveOffer(offer)}
           />
         ))
       }
