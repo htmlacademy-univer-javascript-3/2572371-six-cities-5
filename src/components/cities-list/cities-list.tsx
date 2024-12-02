@@ -24,7 +24,7 @@ function CitiesList({cities}: ICitiesListProps) {
               <a
                 className={`locations__item-link tabs__item ${city.name === activeCity.name ? 'tabs__item--active' : ''}`}
                 href="#"
-                onClick={() => onCityClick(city)}
+                onMouseOver={() => onCityClick(city)}
               >
                 <span>{city.name}</span>
               </a>

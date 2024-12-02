@@ -1,23 +1,29 @@
-import { useRef, useEffect } from 'react';
-import { Icon, Marker, layerGroup } from 'leaflet';
+import {useRef, useEffect} from 'react';
+import {Icon, Marker, layerGroup} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {Offer} from '../../mocks/mocks.ts';
 import useMap from '../../hooks/use-map.ts';
 
 type MapProps = {
   offers: Offer[];
-  selectedOffer: Offer;
+  selectedOffer: Offer | null;
 };
 
 const defaultCustomIcon = new Icon({
-  iconUrl: 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg',
-  iconSize: [40, 40],
+  iconUrl: 'img/pin.svg',
+  iconSize: [40, 60],
   iconAnchor: [20, 40],
 });
 
-function Map({offers, selectedOffer}: MapProps){
+const currentCustomIcon = new Icon({
+  iconUrl: 'img/pin-active.svg',
+  iconSize: [40, 60],
+  iconAnchor: [20, 40],
+});
+
+function Map({offers, selectedOffer}: MapProps) {
   const mapRef = useRef(null);
-  const map = useMap(mapRef, selectedOffer);
+  const map = useMap(mapRef, selectedOffer || offers[0]);
 
   useEffect(() => {
     if (map) {
@@ -26,9 +32,9 @@ function Map({offers, selectedOffer}: MapProps){
         const marker = new Marker({
           lat: offer.latitude,
           lng: offer.longitude,
-        });
+        }).setIcon(offer.id === selectedOffer?.id ? currentCustomIcon : defaultCustomIcon);
 
-        marker.setIcon(defaultCustomIcon).addTo(markerLayer);
+        marker.addTo(markerLayer);
       });
 
       return () => {
@@ -37,7 +43,7 @@ function Map({offers, selectedOffer}: MapProps){
     }
   }, [map, offers, selectedOffer]);
 
-  return <div style={{ height: '500px' }} ref={mapRef}></div>;
+  return <div style={{height: '500px'}} ref={mapRef}></div>;
 }
 
 export default Map;
