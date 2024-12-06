@@ -30,7 +30,7 @@ function App({Offers}: AppData): React.ReactElement {
               </Layout>
             }
           />
-          <Route path={AppRoutes.Login} element={<Layout><LoginPage/></Layout>}/>
+          <Route path={AppRoutes.Login} element={<LoginPage/>}/>
           <Route path={AppRoutes.Favorites}
             element={
               <PrivateRoute childrenWhenNotLogged={null}>

@@ -1,5 +1,12 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {setActiveCity, setOfferListLoading, setOffersList, setSortOption} from './action.ts';
+import {
+  setActiveCity,
+  setAuthorizationStatus,
+  setLogin,
+  setOfferListLoading,
+  setOffersList,
+  setSortOption
+} from './action.ts';
 import Offer from '../types/offer.ts';
 import City from '../types/city.ts';
 import {cities} from '../mocks/mocks.ts';
@@ -10,13 +17,17 @@ interface IState {
   offers: Offer[] | null;
   sortOption: SortOption;
   loading: boolean;
+  authorizationStatus: boolean;
+  login: string | null;
 }
 
 const initialState: IState = {
   loading: false,
   currentCity: cities[0],
   offers: null,
-  sortOption: SortOption.Popular
+  sortOption: SortOption.Popular,
+  authorizationStatus: false,
+  login: null,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -35,5 +46,11 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setOfferListLoading, (state, action) => {
       state.loading = action.payload;
+    })
+    .addCase(setAuthorizationStatus, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(setLogin, (state, action) => {
+      state.login = action.payload;
     });
 });

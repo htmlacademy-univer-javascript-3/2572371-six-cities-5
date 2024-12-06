@@ -1,8 +1,17 @@
 import React, {ReactNode} from 'react';
 import {Link} from 'react-router-dom';
 import AppRoutes from '../../constants/routes.ts';
+import useAppSelector from '../../hooks/use-app-selector.ts';
+import {useDispatch} from 'react-redux';
+import {setAuthorizationStatus} from '../../store/action.ts';
 
 function Layout({children}: { children: ReactNode }): React.ReactElement {
+  const login = useAppSelector((state) => state.login);
+  const loggedIn = useAppSelector((state) => state.authorizationStatus);
+  const dispatch = useDispatch();
+  const signOut = () => {
+    dispatch(setAuthorizationStatus(false));
+  };
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -15,18 +24,25 @@ function Layout({children}: { children: ReactNode }): React.ReactElement {
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
-                </li>
+                {loggedIn && (
+                  <li className="header__nav-item user">
+                    <a className="header__nav-link header__nav-link--profile" href="#">
+                      <div className="header__avatar-wrapper user__avatar-wrapper">
+                      </div>
+                      <span className="header__user-name user__name">{login}</span>
+                      <span className="header__favorite-count">3</span>
+                    </a>
+                  </li>)}
                 <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
+                  {!loggedIn ? (
+                    <Link className="header__nav-link" to={AppRoutes.Login}>
+                      <span className="header__signout">Login</span>
+                    </Link>)
+                    : (
+                      <a className="header__nav-link" onClick={signOut}>
+                        <span className="header__signout">Sign out</span>
+                      </a>
+                    )}
                 </li>
               </ul>
             </nav>

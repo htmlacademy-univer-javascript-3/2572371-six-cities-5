@@ -7,3 +7,5 @@ export const setOffersList = createAction<{offers: Offer[]}>('offerList/matchOff
 export const setActiveCity = createAction<{city: City}>('navigation/setActiveCity');
 export const setSortOption = createAction<{sortOption: SortOption}>('navigation/setSortOption');
 export const setOfferListLoading = createAction<boolean>('offerList/offerListLoading');
+export const setAuthorizationStatus = createAction<boolean>('auth/status');
+export const setLogin = createAction<string>('auth/login');
