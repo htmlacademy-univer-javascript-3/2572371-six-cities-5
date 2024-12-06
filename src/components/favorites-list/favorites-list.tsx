@@ -3,7 +3,7 @@ import Offer from '../../types/offer.ts';
 
 function groupByLocation(offers: Offer[]): { [key: string]: Offer[] } {
   return offers.reduce((acc, offer) => {
-    const country = offer.location.name;
+    const country = offer.city.name;
     if (!acc[country]) {
       acc[country] = [];
     }
@@ -31,9 +31,9 @@ function FavoritesList({offers}: { offers: Offer[] }) {
                 <FavoritesCard
                   key={offer.id}
                   Premium={offer.isPremium}
-                  Description={offer.description}
+                  Description={offer.title}
                   Type={offer.type}
-                  ImagePath={offer.image}
+                  ImagePath={offer.previewImage}
                   Price={offer.price}
                 />
               ))}

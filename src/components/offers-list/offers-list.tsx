@@ -15,10 +15,10 @@ function OffersList({Offers, ClassName, SetActiveOffer}: OffersListProps) {
           <Card
             Id={offer.id}
             key={offer.id}
-            ImagePath={offer.image}
+            ImagePath={offer.previewImage}
             Price={offer.price}
             Bookmarked={offer.isFavorite}
-            Description={offer.description}
+            Description={offer.title}
             Type={'Apartment'}
             Premium={offer.isPremium}
             onMouseOver={() => SetActiveOffer(offer)}

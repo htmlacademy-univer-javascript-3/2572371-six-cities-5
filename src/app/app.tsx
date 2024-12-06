@@ -12,7 +12,7 @@ import Layout from '../pages/layout/layout.tsx';
 import Offer from '../types/offer.ts';
 import {offersMocks, reviewsMocks} from '../mocks/mocks.ts';
 import {Provider} from 'react-redux';
-import {store} from '../store/store.ts';
+import store from '../store';
 
 type AppData = {
   Offers: Offer[];

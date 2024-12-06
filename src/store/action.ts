@@ -6,3 +6,4 @@ import SortOption from '../types/sort-option.ts';
 export const setOffersList = createAction<{offers: Offer[]}>('offerList/matchOffers');
 export const setActiveCity = createAction<{city: City}>('navigation/setActiveCity');
 export const setSortOption = createAction<{sortOption: SortOption}>('navigation/setSortOption');
+export const setOfferListLoading = createAction<boolean>('offerList/offerListLoading');
