@@ -5,7 +5,7 @@ import {MAP_LINK, OPEN_STREET_MAP_COPYRIGHT, CARTO_COPYRIGHT} from '../constants
 
 function useMap(
   mapRef: MutableRefObject<HTMLElement | null>,
-  {latitude, longitude}: Offer): Map | null {
+  {city}: Offer): Map | null {
 
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);
@@ -14,8 +14,8 @@ function useMap(
     if (mapRef.current !== null && !isRenderedRef.current) {
       const instance = new Map(mapRef.current, {
         center: {
-          lat: latitude,
-          lng: longitude
+          lat: city.location.latitude,
+          lng: city.location.longitude
         },
         zoom: 11,
       });
@@ -30,7 +30,7 @@ function useMap(
       setMap(instance);
       isRenderedRef.current = true;
     }
-  }, [mapRef, latitude, longitude]);
+  }, [mapRef, city.location.latitude, city.location.longitude]);
 
   return map;
 }

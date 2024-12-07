@@ -30,8 +30,8 @@ function Map({offers, selectedOffer}: MapProps) {
       const markerLayer = layerGroup().addTo(map);
       offers.forEach((offer) => {
         const marker = new Marker({
-          lat: offer.latitude,
-          lng: offer.longitude,
+          lat: offer.location.latitude,
+          lng: offer.location.longitude,
         }).setIcon(offer.id === selectedOffer?.id ? currentCustomIcon : defaultCustomIcon);
 
         marker.addTo(markerLayer);

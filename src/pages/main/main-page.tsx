@@ -7,6 +7,7 @@ import CitiesList from '../../components/cities-list/cities-list.tsx';
 import {cities} from '../../mocks/mocks.ts';
 import SortOptions from '../../components/sort-options/sort-options.tsx';
 import {sortOptions} from '../../types/sort-option.ts';
+import Spinner from '../../components/spinner/spinner.tsx';
 
 
 function MainPage() {
@@ -15,27 +16,29 @@ function MainPage() {
   const sortOption = useAppSelector((state) => state.sortOption);
   const city = useAppSelector((state) => state.currentCity);
   const offers = useAppSelector((state) => state.offers
-    .filter((offer) => offer.location.name === city.name))
-    .sort(sortOptions[sortOption]);
+    ?.filter((offer) => offer.city.name === city.name))
+    ?.sort(sortOptions[sortOption]);
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
       <CitiesList cities={cities}/>
-      <div className="cities">
-        <div className="cities__places-container container">
-          <section className="cities__places places">
-            <h2 className="visually-hidden">Places</h2>
-            <b className="places__found">{offers.length} places to stay in {activeCity.name}</b>
-            <SortOptions />
-            <OffersList Offers={offers} SetActiveOffer={setActiveCard}/>
-          </section>
-          <div className="cities__right-section">
-            <section style={{alignSelf: 'stretch', width: '100%'}}>
-              <Map offers={offers} selectedOffer={activeCard}/>
+      {offers === undefined ? (<Spinner/>) : (
+        <div className="cities">
+          <div className="cities__places-container container">
+            <section className="cities__places places">
+              <h2 className="visually-hidden">Places</h2>
+              <b className="places__found">{offers.length} places to stay in {activeCity.name}</b>
+              <SortOptions/>
+              <OffersList Offers={offers} SetActiveOffer={setActiveCard}/>
             </section>
+            <div className="cities__right-section">
+              <section style={{alignSelf: 'stretch', width: '100%'}}>
+                <Map offers={offers} selectedOffer={activeCard}/>
+              </section>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </main>
   );
 }

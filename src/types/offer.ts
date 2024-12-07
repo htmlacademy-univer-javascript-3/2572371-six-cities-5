@@ -1,21 +1,18 @@
 import City from './city.ts';
+import {Location} from './location.ts';
 
 type Offer = {
-  id: number;
+  id: string;
   title: string;
-  description: string;
+  type: OfferType;
   price: number;
-  image: string;
-  location: City;
-  date: string;
+  city: City;
+  location: Location;
   isFavorite: boolean;
   isPremium: boolean;
-  type: OfferType;
-  longitude: number;
-  latitude: number;
   rating: number;
+  previewImage: string;
 }
-
 type OfferType = 'Apartment' | 'Room';
 
 export default Offer;

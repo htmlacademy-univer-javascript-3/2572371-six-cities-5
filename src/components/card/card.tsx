@@ -9,7 +9,7 @@ type CardProps = {
   ImagePath: string;
   Bookmarked: boolean;
   Price: number;
-  Id: number;
+  Id: string;
   onMouseOver: () => void;
 }
 

@@ -1,4 +1,4 @@
-import {ReactElement} from 'react';
+import {ReactElement, useState} from 'react';
 import CommentForm from '../../components/comment-form/comment-form.tsx';
 import ReviewList from '../../components/review-list/review-list.tsx';
 import UserReview from '../../types/user-review.ts';
@@ -12,6 +12,7 @@ type OfferPageProps = {
 }
 
 function OfferPage({reviews, nearbyOffers}: OfferPageProps): ReactElement {
+  const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
   return (
     <div className="page">
       <main className="page__main page__main--offer">
@@ -145,13 +146,13 @@ function OfferPage({reviews, nearbyOffers}: OfferPageProps): ReactElement {
             </div>
           </div>
           <section style={{alignSelf: 'stretch', width: '80%', placeSelf:'center', marginBottom: 50}}>
-            <Map offers={nearbyOffers} selectedOffer={nearbyOffers[0]}/>
+            <Map offers={nearbyOffers} selectedOffer={selectedOffer}/>
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <OffersList Offers={nearbyOffers} ClassName={'near-places__list places__list'}></OffersList>
+            <OffersList Offers={nearbyOffers} ClassName={'near-places__list places__list'} SetActiveOffer={setSelectedOffer}></OffersList>
           </section>
         </div>
       </main>

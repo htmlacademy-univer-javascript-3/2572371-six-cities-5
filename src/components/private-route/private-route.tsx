@@ -1,5 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import React from 'react';
+import useAppSelector from '../../hooks/use-app-selector.ts';
 
 type PrivateRouteProps = {
   children: React.ReactElement | null;
@@ -7,9 +8,9 @@ type PrivateRouteProps = {
 }
 
 function PrivateRoute({ children, childrenWhenNotLogged } : PrivateRouteProps) {
-  const isAuthenticated = true;
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
-  return isAuthenticated ? children : childrenWhenNotLogged || <Navigate to="/login" />;
+  return authorizationStatus ? children : childrenWhenNotLogged || <Navigate to="/login" />;
 }
 
 export default PrivateRoute;
