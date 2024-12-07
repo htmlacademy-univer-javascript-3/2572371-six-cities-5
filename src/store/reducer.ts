@@ -5,7 +5,7 @@ import {
   setLogin,
   setOfferListLoading,
   setOffersList,
-  setSortOption
+  setSortOption, setToken
 } from './action.ts';
 import Offer from '../types/offer.ts';
 import City from '../types/city.ts';
@@ -19,6 +19,7 @@ interface IState {
   loading: boolean;
   authorizationStatus: boolean;
   login: string | null;
+  token: string | null;
 }
 
 const initialState: IState = {
@@ -28,6 +29,7 @@ const initialState: IState = {
   sortOption: SortOption.Popular,
   authorizationStatus: false,
   login: null,
+  token: null,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -52,5 +54,8 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setLogin, (state, action) => {
       state.login = action.payload;
+    })
+    .addCase(setToken, (state, action) => {
+      state.token = action.payload;
     });
 });

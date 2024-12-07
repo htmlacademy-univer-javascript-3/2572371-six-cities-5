@@ -9,3 +9,4 @@ export const setSortOption = createAction<{sortOption: SortOption}>('navigation/
 export const setOfferListLoading = createAction<boolean>('offerList/offerListLoading');
 export const setAuthorizationStatus = createAction<boolean>('auth/status');
 export const setLogin = createAction<string>('auth/login');
+export const setToken = createAction<string>('auth/token');

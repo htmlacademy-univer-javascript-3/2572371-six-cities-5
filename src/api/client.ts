@@ -1,7 +1,7 @@
 import {createAsyncThunk, Dispatch} from '@reduxjs/toolkit';
 import {AxiosInstance} from 'axios';
 import Offer from '../types/offer.ts';
-import {setAuthorizationStatus, setLogin, setOfferListLoading, setOffersList} from '../store/action.ts';
+import {setAuthorizationStatus, setLogin, setOfferListLoading, setOffersList, setToken} from '../store/action.ts';
 
 
 const APIRoute = {
@@ -29,7 +29,9 @@ export const checkAuth = createAsyncThunk<void, undefined, {
   'auth/checkAuth',
   async (_arg, {dispatch, extra: api}) => {
     try {
-      await api.get(APIRoute.Login);
+      const {data} = await api.get<LoginResponse>(APIRoute.Login);
+      dispatch(setLogin(data.email));
+      dispatch(setToken(data.token));
       dispatch(setAuthorizationStatus(true));
     } catch (err) {
       const error = err as { response?: { status?: number } };
@@ -45,6 +47,16 @@ export type LoginCredentials = {
   password: string;
 };
 
+type LoginResponse =
+{
+  name: string
+  avatarUrl: string
+  isPro: boolean
+  email: string
+  token: string
+}
+
+
 export const loginAction = createAsyncThunk<void, LoginCredentials, {
   dispatch: Dispatch;
   extra: AxiosInstance;
@@ -52,9 +64,10 @@ export const loginAction = createAsyncThunk<void, LoginCredentials, {
   'auth/login',
   async ({email, password}, {dispatch, extra: api}) => {
     try {
-      await api.post(APIRoute.Login, {email, password});
+      const {data} = await api.post<LoginResponse>(APIRoute.Login, {email, password});
       dispatch(setAuthorizationStatus(true));
-      dispatch(setLogin(email));
+      dispatch(setLogin(data.email));
+      dispatch(setToken(data.token));
     } catch (err) { /* empty */ }
   },
 );
