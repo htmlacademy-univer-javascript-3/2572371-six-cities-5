@@ -8,12 +8,11 @@ import {
   setSortOption, setToken
 } from './action.ts';
 import Offer from '../types/offer.ts';
-import City from '../types/city.ts';
-import {cities} from '../mocks/mocks.ts';
 import SortOption from '../types/sort-option.ts';
+import {CityNames} from '../constants/cities.ts';
 
 interface IState {
-  currentCity: City;
+  currentCity: string;
   offers: Offer[] | null;
   sortOption: SortOption;
   loading: boolean;
@@ -24,7 +23,7 @@ interface IState {
 
 const initialState: IState = {
   loading: false,
-  currentCity: cities[0],
+  currentCity: CityNames[0],
   offers: null,
   sortOption: SortOption.Popular,
   authorizationStatus: false,
@@ -35,8 +34,7 @@ const initialState: IState = {
 export const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(setActiveCity, (state, action) => {
-      const {city} = action.payload;
-      state.currentCity = city;
+      state.currentCity = action.payload;
     })
     .addCase(setOffersList, (state, action) => {
       const {offers} = action.payload;

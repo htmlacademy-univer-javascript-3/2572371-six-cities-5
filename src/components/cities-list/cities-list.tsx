@@ -1,18 +1,17 @@
-import City from '../../types/city.ts';
 import useAppSelector from '../../hooks/use-app-selector.ts';
 import {useDispatch} from 'react-redux';
 import {setActiveCity} from '../../store/action.ts';
 
 interface ICitiesListProps {
-  cities: City[];
+  cities: string[];
 }
 
 function CitiesList({cities}: ICitiesListProps) {
   const activeCity = useAppSelector((state) => state.currentCity);
   const dispatch = useDispatch();
 
-  function onCityClick(city: City) {
-    dispatch(setActiveCity({city}));
+  function onCityClick(city: string) {
+    dispatch(setActiveCity(city));
   }
 
   return (
@@ -20,13 +19,13 @@ function CitiesList({cities}: ICitiesListProps) {
       <section className="locations container">
         <ul className="locations__list tabs__list">
           {cities.map((city) => (
-            <li className="locations__item" key={city.name}>
+            <li className="locations__item" key={city}>
               <a
-                className={`locations__item-link tabs__item ${city.name === activeCity.name ? 'tabs__item--active' : ''}`}
+                className={`locations__item-link tabs__item ${city === activeCity ? 'tabs__item--active' : ''}`}
                 href="#"
                 onMouseOver={() => onCityClick(city)}
               >
-                <span>{city.name}</span>
+                <span>{city}</span>
               </a>
             </li>
           ))}
