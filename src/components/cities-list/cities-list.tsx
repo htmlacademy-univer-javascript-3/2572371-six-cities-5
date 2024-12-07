@@ -1,12 +1,13 @@
 import useAppSelector from '../../hooks/use-app-selector.ts';
 import {useDispatch} from 'react-redux';
 import {setActiveCity} from '../../store/action.ts';
+import {memo} from 'react';
 
 interface ICitiesListProps {
   cities: string[];
 }
 
-function CitiesList({cities}: ICitiesListProps) {
+const List = ({cities}: ICitiesListProps) => {
   const activeCity = useAppSelector((state) => state.currentCity);
   const dispatch = useDispatch();
 
@@ -33,7 +34,7 @@ function CitiesList({cities}: ICitiesListProps) {
       </section>
     </div>
   );
-}
+};
 
-export default CitiesList;
+export const CitiesList = memo(List);
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {Link} from 'react-router-dom';
 import AppRoutes from '../../constants/routes.ts';
 
@@ -10,13 +10,13 @@ type CardProps = {
   Bookmarked: boolean;
   Price: number;
   Id: string;
-  onMouseOver: () => void;
+  selectOffer: (offerId: string) => void;
   Rating: number;
 }
 
-function Card(props: CardProps): React.ReactElement {
+function CardBase(props: CardProps): React.ReactElement {
   return (
-    <article className="cities__card place-card" onMouseOver={props.onMouseOver}>
+    <article className="cities__card place-card" onMouseOver={() => props.selectOffer(props.Id)}>
       {props.Premium && (
         <div className="place-card__mark">
           <span>Premium</span>
@@ -55,4 +55,4 @@ function Card(props: CardProps): React.ReactElement {
   );
 }
 
-export default Card;
+export const Card = memo(CardBase);

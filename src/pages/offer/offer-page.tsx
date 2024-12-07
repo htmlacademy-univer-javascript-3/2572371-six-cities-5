@@ -1,9 +1,8 @@
 import {ReactElement, useEffect, useState} from 'react';
 import CommentForm from '../../components/comment-form/comment-form.tsx';
-import ReviewList from '../../components/review-list/review-list.tsx';
-import Offer from '../../types/offer.ts';
-import Map from '../../components/map/map-component.tsx';
-import OffersList from '../../components/offers-list/offers-list.tsx';
+import {ReviewList} from '../../components/review-list/review-list.tsx';
+import {MapComponent} from '../../components/map/map-component.tsx';
+import {OfferList} from '../../components/offers-list/offers-list.tsx';
 import useAppSelector from '../../hooks/use-app-selector.ts';
 import Spinner from '../../components/spinner/spinner.tsx';
 import store from '../../store';
@@ -11,7 +10,7 @@ import {fetchNearby, fetchOffer, fetchReviews} from '../../api/client.ts';
 import {useParams} from 'react-router-dom';
 
 function OfferPage(): ReactElement {
-  const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
+  const [selectedOffer, setSelectedOffer] = useState<string | null>(null);
   const {offerId} = useParams();
 
   useEffect(() => {
@@ -23,6 +22,7 @@ function OfferPage(): ReactElement {
   const offer = useAppSelector((state) => state.selectedOffer);
   const reviews = useAppSelector((state) => state.selectedOffersReviews);
   const nearbyOffers = useAppSelector((state) => state.selectedOfferNearby);
+  const offersMap = nearbyOffers && new Map(nearbyOffers.map((x) => [x.id, x]));
   const loggedIn = useAppSelector((state) => state.authorizationStatus);
   return offer === null ? (<Spinner/>)
     : (
@@ -113,7 +113,7 @@ function OfferPage(): ReactElement {
             </div>
             {nearbyOffers === null ? <Spinner></Spinner> :
               <section style={{alignSelf: 'stretch', width: '80%', placeSelf: 'center', marginBottom: 50}}>
-                <Map offers={nearbyOffers} selectedOffer={selectedOffer}/>
+                <MapComponent offers={nearbyOffers} selectedOffer={offersMap!.get(selectedOffer!)}/>
               </section>}
           </section>
           <div className="container">
@@ -121,7 +121,7 @@ function OfferPage(): ReactElement {
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
               {nearbyOffers === null
                 ? <Spinner></Spinner>
-                : (<OffersList Offers={nearbyOffers} ClassName={'near-places__list places__list'} SetActiveOffer={setSelectedOffer}/>)}
+                : (<OfferList Offers={nearbyOffers} ClassName={'near-places__list places__list'} SetActiveOffer={setSelectedOffer}/>)}
             </section>
           </div>
         </main>

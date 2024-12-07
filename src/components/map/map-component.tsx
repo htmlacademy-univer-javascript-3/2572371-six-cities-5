@@ -1,4 +1,4 @@
-import {useRef, useEffect} from 'react';
+import {useRef, useEffect, memo} from 'react';
 import {Icon, Marker, layerGroup} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/use-map.ts';
@@ -6,7 +6,7 @@ import Offer from '../../types/offer.ts';
 
 type MapProps = {
   offers: Offer[];
-  selectedOffer: Offer | null;
+  selectedOffer: Offer | undefined;
 };
 
 const defaultCustomIcon = new Icon({
@@ -21,7 +21,7 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40],
 });
 
-function Map({offers, selectedOffer}: MapProps) {
+function MapBase({offers, selectedOffer}: MapProps) {
   const mapRef = useRef(null);
   const map = useMap(mapRef, selectedOffer || offers[0]);
 
@@ -46,4 +46,4 @@ function Map({offers, selectedOffer}: MapProps) {
   return <div style={{height: '500px'}} ref={mapRef}></div>;
 }
 
-export default Map;
+export const MapComponent = memo(MapBase);

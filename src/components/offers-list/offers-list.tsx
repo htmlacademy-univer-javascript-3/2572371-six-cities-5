@@ -1,13 +1,17 @@
-import Card from '../card/card.tsx';
+import {Card} from '../card/card.tsx';
 import Offer from '../../types/offer.ts';
+import {memo, useCallback} from 'react';
 
 type OffersListProps = {
   Offers: Offer[];
   ClassName?: string;
-  SetActiveOffer: (offer: Offer) => void;
+  SetActiveOffer: (offerId: string) => void;
 }
 
-function OffersList({Offers, ClassName, SetActiveOffer}: OffersListProps) {
+function OffersListBase({Offers, ClassName, SetActiveOffer}: OffersListProps) {
+  const activeOffer = useCallback((offerId: string) => {
+    SetActiveOffer(offerId);
+  }, [SetActiveOffer]);
   return (
     <div className={ClassName || 'cities__places-list places__list tabs__content'}>
       {
@@ -21,7 +25,7 @@ function OffersList({Offers, ClassName, SetActiveOffer}: OffersListProps) {
             Description={offer.title}
             Type={'Apartment'}
             Premium={offer.isPremium}
-            onMouseOver={() => SetActiveOffer(offer)}
+            selectOffer={activeOffer}
             Rating={offer.rating}
           />
         ))
@@ -29,4 +33,4 @@ function OffersList({Offers, ClassName, SetActiveOffer}: OffersListProps) {
     </div>);
 }
 
-export default OffersList;
+export const OfferList = memo(OffersListBase);
