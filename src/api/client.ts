@@ -49,11 +49,11 @@ export type LoginCredentials = {
 
 type LoginResponse =
 {
-  name: string
-  avatarUrl: string
-  isPro: boolean
-  email: string
-  token: string
+  name: string;
+  avatarUrl: string;
+  isPro: boolean;
+  email: string;
+  token: string;
 }
 
 
