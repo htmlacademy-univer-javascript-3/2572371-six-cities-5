@@ -8,7 +8,6 @@ import NotFoundPage from '../pages/not-found/not-found-page.tsx';
 import React from 'react';
 import AppRoutes from '../constants/routes.ts';
 import Layout from '../pages/layout/layout.tsx';
-import Offer from '../types/offer.ts';
 import {Provider} from 'react-redux';
 import store from '../store';
 

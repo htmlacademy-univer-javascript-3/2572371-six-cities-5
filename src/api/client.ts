@@ -2,16 +2,17 @@ import {createAsyncThunk, Dispatch} from '@reduxjs/toolkit';
 import {AxiosInstance} from 'axios';
 import Offer from '../types/offer.ts';
 import {
-  setAuthorizationStatus,
-  setLogin, setNearby,
+  setNearby,
   setOffer,
+  setReviews,
+  setAuthorizationStatus,
+  setLogin,
   setOfferListLoading,
   setOffersList,
-  setReviews
+  setToken
 } from '../store/action.ts';
 import {FullOffer} from '../types/fullOffer.ts';
 import UserReview from '../types/user-review.ts';
-import {setAuthorizationStatus, setLogin, setOfferListLoading, setOffersList, setToken} from '../store/action.ts';
 
 
 const APIRoute = {
@@ -92,13 +93,13 @@ export type LoginCredentials = {
 };
 
 type LoginResponse =
-{
-  name: string;
-  avatarUrl: string;
-  isPro: boolean;
-  email: string;
-  token: string;
-}
+  {
+    name: string;
+    avatarUrl: string;
+    isPro: boolean;
+    email: string;
+    token: string;
+  }
 
 
 export const loginAction = createAsyncThunk<void, LoginCredentials, {
@@ -112,6 +113,7 @@ export const loginAction = createAsyncThunk<void, LoginCredentials, {
       dispatch(setAuthorizationStatus(true));
       dispatch(setLogin(data.email));
       dispatch(setToken(data.token));
-    } catch (err) { /* empty */ }
+    } catch (err) { /* empty */
+    }
   },
 );
