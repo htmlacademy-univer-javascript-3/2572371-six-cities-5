@@ -1,6 +1,5 @@
 import ReactDOM from 'react-dom/client';
 import App from './app/app.tsx';
-import {offersMocks} from './mocks/mocks.ts';
 import store from './store';
 import {checkAuth, fetchOffersAction} from './api/client.ts';
 
@@ -11,5 +10,5 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <App Offers={offersMocks}></App>
+  <App />
 );

@@ -1,4 +1,4 @@
-import {UserReview} from '../../mocks/mocks.ts';
+import UserReview from '../../types/user-review.ts';
 
 type ReviewProps = {
   review: UserReview;

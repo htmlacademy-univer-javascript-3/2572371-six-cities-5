@@ -1,8 +1,8 @@
 import {useRef, useEffect} from 'react';
 import {Icon, Marker, layerGroup} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import {Offer} from '../../mocks/mocks.ts';
 import useMap from '../../hooks/use-map.ts';
+import Offer from '../../types/offer.ts';
 
 type MapProps = {
   offers: Offer[];
