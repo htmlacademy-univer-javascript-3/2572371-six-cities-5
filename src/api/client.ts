@@ -1,13 +1,57 @@
 import {createAsyncThunk, Dispatch} from '@reduxjs/toolkit';
 import {AxiosInstance} from 'axios';
 import Offer from '../types/offer.ts';
+import {
+  setAuthorizationStatus,
+  setLogin, setNearby,
+  setOffer,
+  setOfferListLoading,
+  setOffersList,
+  setReviews
+} from '../store/action.ts';
+import {FullOffer} from '../types/fullOffer.ts';
+import UserReview from '../types/user-review.ts';
 import {setAuthorizationStatus, setLogin, setOfferListLoading, setOffersList, setToken} from '../store/action.ts';
 
 
 const APIRoute = {
   Offers: '/offers',
   Login: '/login',
+  Comments: '/comments'
 };
+
+export const fetchNearby = createAsyncThunk<void, string, {
+  dispatch: Dispatch;
+  extra: AxiosInstance;
+}>(
+  'offerList/fetchNearby',
+  async (id, {dispatch, extra: api}) => {
+    const {data} = await api.get<Offer[]>(`${APIRoute.Offers}/${id}/nearby`);
+    dispatch(setNearby(data));
+  },
+);
+
+export const fetchReviews = createAsyncThunk<void, string, {
+  dispatch: Dispatch;
+  extra: AxiosInstance;
+}>(
+  'offerList/fetchReviews',
+  async (id, {dispatch, extra: api}) => {
+    const {data} = await api.get<UserReview[]>(`${APIRoute.Comments}/${id}`);
+    dispatch(setReviews(data));
+  },
+);
+
+export const fetchOffer = createAsyncThunk<void, string, {
+  dispatch: Dispatch;
+  extra: AxiosInstance;
+}>(
+  'offerList/fetchOffer',
+  async (id, {dispatch, extra: api}) => {
+    const {data} = await api.get<FullOffer>(`${APIRoute.Offers}/${id}`);
+    dispatch(setOffer(data));
+  },
+);
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
   dispatch: Dispatch;

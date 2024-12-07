@@ -11,6 +11,7 @@ type CardProps = {
   Price: number;
   Id: string;
   onMouseOver: () => void;
+  Rating: number;
 }
 
 function Card(props: CardProps): React.ReactElement {
@@ -40,8 +41,8 @@ function Card(props: CardProps): React.ReactElement {
           </button>
         </div>
         <div className="place-card__rating rating">
-          <div className="place-card__stars rating__stars">
-            <span style={{width: 80}}></span>
+          <div className="offer__stars rating__stars">
+            <span style={{width: `${props.Rating * 20}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

@@ -14,7 +14,7 @@ function CommentForm() {
     <form className="reviews__form form" action="#" method="post">
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
-
+        <span style={{width: `${state.rating * 20}%`}}></span>
         {Array.from({length: state.rating}, (_, i) => (
           <Fragment key={i}>
             <input className="form__rating-input visually-hidden" name="rating" value={i + 1} id={`${i + 1}-stars`}
