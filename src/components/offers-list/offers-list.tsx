@@ -22,6 +22,7 @@ function OffersList({Offers, ClassName, SetActiveOffer}: OffersListProps) {
             Type={'Apartment'}
             Premium={offer.isPremium}
             onMouseOver={() => SetActiveOffer(offer)}
+            Rating={offer.rating}
           />
         ))
       }

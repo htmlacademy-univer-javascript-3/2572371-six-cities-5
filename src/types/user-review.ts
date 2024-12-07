@@ -1,10 +1,11 @@
+import {User} from './user.ts';
+
 type UserReview = {
-  id: number;
-  name: string;
-  avatar: string;
+  id: string;
+  date: string;
+  user: User;
+  comment: string;
   rating: number;
-  date: Date;
-  text: string;
 }
 
 export default UserReview;

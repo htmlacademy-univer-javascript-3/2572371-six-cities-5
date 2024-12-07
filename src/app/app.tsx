@@ -3,7 +3,6 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import LoginPage from '../pages/login-page/login-page.tsx';
 import PrivateRoute from '../components/private-route/private-route.tsx';
 import FavoritesPage from '../pages/favorites/favorites-page.tsx';
-import OfferNotLoggedPage from '../pages/offer-not-logged/offer-not-logged-page.tsx';
 import OfferPage from '../pages/offer/offer-page.tsx';
 import NotFoundPage from '../pages/not-found/not-found-page.tsx';
 import React from 'react';
@@ -36,11 +35,9 @@ function App(): React.ReactElement {
           />
           <Route path={AppRoutes.OfferForRouter}
             element={
-              <PrivateRoute childrenWhenNotLogged={<OfferNotLoggedPage/>}>
-                <Layout>
-                  <OfferPage reviews={[]} nearbyOffers={[]}/>
-                </Layout>
-              </PrivateRoute>
+              <Layout>
+                <OfferPage/>
+              </Layout>
             }
           />
           <Route path="*" element={<Layout><NotFoundPage/></Layout>}/>
