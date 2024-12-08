@@ -1,11 +1,12 @@
 import Review from '../review/review.tsx';
 import UserReview from '../../types/user-review.ts';
+import {memo} from 'react';
 
 type ReviewListProps = {
   reviews: UserReview[];
 }
 
-function ReviewList({reviews}: ReviewListProps) {
+function ReviewListBase({reviews}: ReviewListProps) {
   return (
     <ul className="reviews__list">
       {reviews.map((review) => (
@@ -15,4 +16,4 @@ function ReviewList({reviews}: ReviewListProps) {
   );
 }
 
-export default ReviewList;
+export const ReviewList = memo(ReviewListBase);

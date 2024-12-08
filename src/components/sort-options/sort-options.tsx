@@ -1,10 +1,10 @@
-import {useState} from 'react';
+import {memo, useState} from 'react';
 import useAppSelector from '../../hooks/use-app-selector.ts';
 import {useDispatch} from 'react-redux';
 import SortOption from '../../types/sort-option.ts';
 import {setSortOption} from '../../store/action.ts';
 
-function SortOptions() {
+function SortOptionsBase() {
   const [hidden, setHidden] = useState(true);
 
   const dispatch = useDispatch();
@@ -46,4 +46,4 @@ function SortOptions() {
   );
 }
 
-export default SortOptions;
+export const SortOptions = memo(SortOptionsBase);
