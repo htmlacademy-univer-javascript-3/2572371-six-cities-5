@@ -7,6 +7,7 @@ import {SortOptions} from '../../components/sort-options/sort-options.tsx';
 import {sortOptions} from '../../types/sort-option.ts';
 import Spinner from '../../components/spinner/spinner.tsx';
 import {CityNames} from '../../constants/cities.ts';
+import {NoOffers} from '../main-empty/no-offers.tsx';
 
 
 function MainPage() {
@@ -18,29 +19,47 @@ function MainPage() {
     ?.filter((offer) => offer.city.name === city))
     ?.sort(sortOptions[sortOption]);
   const offersMap = offers && new Map(offers.map((offer) => [offer.id, offer]));
-  return (
-    <main className="page__main page__main--index">
-      <h1 className="visually-hidden">Cities</h1>
-      <CitiesList cities={CityNames}/>
-      {offers === undefined ? (<Spinner/>) : (
-        <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers.length} places to stay in {activeCity}</b>
-              <SortOptions/>
-              <OfferList Offers={offers} SetActiveOffer={setActiveCard}/>
-            </section>
-            <div className="cities__right-section">
-              <section style={{alignSelf: 'stretch', width: '100%'}}>
-                <MapComponent offers={offers} selectedOffer={offersMap!.get(activeCard!)}/>
+  if (offers === undefined) {
+    return (
+      <main className="page__main page__main--index">
+        <h1 className="visually-hidden">Cities</h1>
+        <CitiesList cities={CityNames}/>
+        {<Spinner/>}
+      </main>
+    );
+  } else if (offers.length === 0) {
+    return (
+      <main className="page__main page__main--index">
+        <h1 className="visually-hidden">Cities</h1>
+        <CitiesList cities={CityNames}/>
+        {<NoOffers City={city}/>}
+      </main>
+    );
+  } else {
+    return (
+      <main className="page__main page__main--index">
+        <h1 className="visually-hidden">Cities</h1>
+        <CitiesList cities={CityNames}/>
+        {
+          <div className="cities">
+            <div className="cities__places-container container">
+              <section className="cities__places places">
+                <h2 className="visually-hidden">Places</h2>
+                <b className="places__found">{offers.length} places to stay in {activeCity}</b>
+                <SortOptions/>
+                <OfferList Offers={offers} SetActiveOffer={setActiveCard}/>
               </section>
+              <div className="cities__right-section">
+                <section style={{alignSelf: 'stretch', width: '100%'}}>
+                  <MapComponent offers={offers} selectedOffer={offersMap!.get(activeCard!)}/>
+                </section>
+              </div>
             </div>
           </div>
-        </div>
-      )}
-    </main>
-  );
+        }
+      </main>
+    );
+  }
 }
 
 export default MainPage;

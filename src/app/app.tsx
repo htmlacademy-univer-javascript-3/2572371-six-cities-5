@@ -28,7 +28,7 @@ function App(): React.ReactElement {
             element={
               <PrivateRoute childrenWhenNotLogged={null}>
                 <Layout>
-                  <FavoritesPage offers={[]}/>
+                  <FavoritesPage/>
                 </Layout>
               </PrivateRoute>
             }

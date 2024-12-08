@@ -1,4 +1,4 @@
-import {loginAction,} from '../../api/client.ts';
+import {fetchFavoritesOffersAction, fetchOffersAction, loginAction,} from '../../api/client.ts';
 import store from '../../store/index.ts';
 import {Link, useNavigate} from 'react-router-dom';
 import AppRoutes from '../../constants/routes.ts';
@@ -12,7 +12,12 @@ function LoginPage() {
     const password = formData.get('password') as string;
     store.dispatch(loginAction({email, password})).then(() => {
       navigate(AppRoutes.Main);
-    });
+    }).then(() => {
+      store.dispatch(fetchOffersAction());
+    })
+      .then(() => {
+        store.dispatch(fetchFavoritesOffersAction());
+      });
   };
   return (
     <div className="page page--gray page--login">

@@ -9,17 +9,66 @@ import {
   setLogin,
   setOfferListLoading,
   setOffersList,
-  setToken
+  setToken, setFavoritesList
 } from '../store/action.ts';
 import {FullOffer} from '../types/fullOffer.ts';
 import UserReview from '../types/user-review.ts';
+import store from '../store';
 
 
 const APIRoute = {
   Offers: '/offers',
   Login: '/login',
-  Comments: '/comments'
+  Comments: '/comments',
+  Favorites: '/favorite',
 };
+
+export const fetchOffersAction = createAsyncThunk<void, undefined, {
+  dispatch: Dispatch;
+  extra: AxiosInstance;
+}>(
+  'offerList/fetchOffers',
+  async (_arg, {dispatch, extra: api}) => {
+    dispatch(setOfferListLoading(true));
+    const {data} = await api.get<Offer[]>(APIRoute.Offers);
+    dispatch(setOfferListLoading(false));
+    dispatch(setOffersList({offers: data}));
+  },
+);
+
+export const fetchFavoritesOffersAction = createAsyncThunk<void, undefined, {
+  dispatch: Dispatch;
+  extra: AxiosInstance;
+}>(
+  'favorites/fetchOffers',
+  async (_arg, {dispatch, extra: api}) => {
+    const {data} = await api.get<Offer[]>(APIRoute.Favorites);
+    dispatch(setFavoritesList(data));
+  },
+);
+
+
+export const addToFavorites = createAsyncThunk<void, string, {
+  dispatch: Dispatch;
+  extra: AxiosInstance;
+}>(
+  'offerList/addToFavorites',
+  async (id, {extra: api}) => {
+    await api.post<FullOffer>(`${APIRoute.Favorites}/${id}/1`);
+    store.dispatch(fetchOffersAction());
+  },
+);
+
+export const removeFromFavorites = createAsyncThunk<void, string, {
+  dispatch: Dispatch;
+  extra: AxiosInstance;
+}>(
+  'offerList/addToFavorites',
+  async (id, {extra: api}) => {
+    await api.post<FullOffer>(`${APIRoute.Favorites}/${id}/0`);
+    store.dispatch(fetchOffersAction());
+  },
+);
 
 export const fetchNearby = createAsyncThunk<void, string, {
   dispatch: Dispatch;
@@ -51,19 +100,6 @@ export const fetchOffer = createAsyncThunk<void, string, {
   async (id, {dispatch, extra: api}) => {
     const {data} = await api.get<FullOffer>(`${APIRoute.Offers}/${id}`);
     dispatch(setOffer(data));
-  },
-);
-
-export const fetchOffersAction = createAsyncThunk<void, undefined, {
-  dispatch: Dispatch;
-  extra: AxiosInstance;
-}>(
-  'offerList/fetchOffers',
-  async (_arg, {dispatch, extra: api}) => {
-    dispatch(setOfferListLoading(true));
-    const {data} = await api.get<Offer[]>(APIRoute.Offers);
-    dispatch(setOfferListLoading(false));
-    dispatch(setOffersList({offers: data}));
   },
 );
 

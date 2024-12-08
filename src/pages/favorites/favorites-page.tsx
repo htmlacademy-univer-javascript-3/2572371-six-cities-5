@@ -1,14 +1,16 @@
 import FavoritesList from '../../components/favorites-list/favorites-list.tsx';
-import Offer from '../../types/offer.ts';
+import useAppSelector from '../../hooks/use-app-selector.ts';
+import Spinner from '../../components/spinner/spinner.tsx';
 
-function FavoritesPage({offers}: { offers: Offer[] }) {
+function FavoritesPage() {
+  const offers = useAppSelector((state) => state.favoritesList);
   return (
     <>
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
-            <FavoritesList offers={offers}/>
+            {offers ? <FavoritesList offers={offers}/> : <Spinner></Spinner>}
           </section>
         </div>
       </main>

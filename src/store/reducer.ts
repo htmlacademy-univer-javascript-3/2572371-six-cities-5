@@ -1,11 +1,13 @@
 import {createReducer} from '@reduxjs/toolkit';
 import {
+  decrementFavorites,
+  incrementFavorites,
   setActiveCity,
-  setAuthorizationStatus,
+  setAuthorizationStatus, setFavoritesList,
   setLogin, setNearby, setOffer,
   setOfferListLoading,
   setOffersList, setReviews,
-  setSortOption, setToken
+  setSortOption, setToken, upsertOfferFavorite
 } from './action.ts';
 import Offer from '../types/offer.ts';
 import SortOption from '../types/sort-option.ts';
@@ -24,6 +26,8 @@ interface IState {
   selectedOfferNearby: Offer[] | null;
   selectedOffersReviews: UserReview[] | null;
   token: string | null;
+  favoritesCount: number;
+  favoritesList: Offer[] | null;
 }
 
 const initialState: IState = {
@@ -37,6 +41,8 @@ const initialState: IState = {
   selectedOfferNearby: null,
   selectedOffersReviews: null,
   token: null,
+  favoritesCount: 0,
+  favoritesList: null,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -47,6 +53,7 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(setOffersList, (state, action) => {
       const {offers} = action.payload;
       state.offers = offers;
+      state.favoritesCount = offers.filter((it) => it.isFavorite).length;
     })
     .addCase(setSortOption, (state, action) => {
       const {sortOption} = action.payload;
@@ -72,5 +79,23 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setToken, (state, action) => {
       state.token = action.payload;
+    })
+    .addCase(upsertOfferFavorite, (state, action) => {
+      const offer = action.payload;
+      const offers = state.offers;
+      if (offers) {
+        const index = offers.findIndex((it) => it.id === offer.id);
+        offers[index].isPremium = offer.isPremium;
+      }
+    })
+    .addCase(incrementFavorites, (state) => {
+      state.favoritesCount += 1;
+    })
+    .addCase(decrementFavorites, (state) => {
+      state.favoritesCount -= 1;
+    })
+    .addCase(setFavoritesList, (state, action) => {
+      state.favoritesList = action.payload;
     });
 });
+

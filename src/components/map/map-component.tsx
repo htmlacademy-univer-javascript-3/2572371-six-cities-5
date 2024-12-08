@@ -1,4 +1,4 @@
-import {useRef, useEffect, memo} from 'react';
+import {useRef, useEffect} from 'react';
 import {Icon, Marker, layerGroup} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/use-map.ts';
@@ -46,4 +46,4 @@ function MapBase({offers, selectedOffer}: MapProps) {
   return <div style={{height: '500px'}} ref={mapRef}></div>;
 }
 
-export const MapComponent = memo(MapBase);
+export const MapComponent = MapBase;
