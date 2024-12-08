@@ -1,6 +1,9 @@
 import React, {memo} from 'react';
 import {Link} from 'react-router-dom';
 import AppRoutes from '../../constants/routes.ts';
+import store from '../../store';
+import {addToFavorites, removeFromFavorites} from '../../api/client.ts';
+import useAppSelector from '../../hooks/use-app-selector.ts';
 
 type CardProps = {
   Premium: boolean;
@@ -15,6 +18,7 @@ type CardProps = {
 }
 
 function CardBase(props: CardProps): React.ReactElement {
+  const isAuthorized = useAppSelector((state) => state.authorizationStatus);
   return (
     <article className="cities__card place-card" onMouseOver={() => props.selectOffer(props.Id)}>
       {props.Premium && (
@@ -33,12 +37,40 @@ function CardBase(props: CardProps): React.ReactElement {
             <b className="place-card__price-value">&euro;{props.Price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`place-card__bookmark-button${props.Bookmarked && '--active'} button`} type="button">
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">{props.Bookmarked ? 'In Bookmarks' : 'To bookmarks'}</span>
-          </button>
+          {isAuthorized
+            ? (
+              <button onClick=// eslint-disable-next-line @typescript-eslint/no-misused-promises
+                {
+                  async () => await store.dispatch(props.Bookmarked
+                    ? removeFromFavorites(props.Id)
+                    : addToFavorites(props.Id))
+                }
+              className={`place-card__bookmark-button${props.Bookmarked && '--active'} button`}
+              type="button"
+              >
+                <svg className={props.Bookmarked
+                  ? 'place-card__bookmark-button place-card__bookmark-button--active button'
+                  : 'place-card__bookmark-icon'} width="18" height="19"
+                >
+                  <use xlinkHref="#icon-bookmark"></use>
+                </svg>
+                <span className="visually-hidden">{props.Bookmarked ? 'In Bookmarks' : 'To bookmarks'}</span>
+              </button>
+            )
+            : (
+              <Link to={AppRoutes.Login}
+                className={`place-card__bookmark-button${props.Bookmarked && '--active'} button`}
+                type="button"
+              >
+                <svg className={props.Bookmarked
+                  ? 'place-card__bookmark-button place-card__bookmark-button--active button'
+                  : 'place-card__bookmark-icon'} width="18" height="19"
+                >
+                  <use xlinkHref="#icon-bookmark"></use>
+                </svg>
+                <span className="visually-hidden">{props.Bookmarked ? 'In Bookmarks' : 'To bookmarks'}</span>
+              </Link>
+            )}
         </div>
         <div className="place-card__rating rating">
           <div className="offer__stars rating__stars">

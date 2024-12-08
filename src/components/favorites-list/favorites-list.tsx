@@ -29,6 +29,7 @@ function FavoritesList({offers}: { offers: Offer[] }) {
             <div className="favorites__places">
               {groupedOffers[location].map((offer) => (
                 <FavoritesCard
+                  Id={offer.id}
                   key={offer.id}
                   Premium={offer.isPremium}
                   Description={offer.title}

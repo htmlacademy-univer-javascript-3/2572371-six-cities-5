@@ -1,4 +1,6 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
+import AppRoutes from '../../constants/routes.ts';
 
 type FavoritesCardProps = {
   Premium: boolean;
@@ -6,6 +8,7 @@ type FavoritesCardProps = {
   Type: string;
   ImagePath: string;
   Price: number;
+  Id : string;
 }
 
 function FavoritesCard(props: FavoritesCardProps): React.ReactElement {
@@ -16,11 +19,11 @@ function FavoritesCard(props: FavoritesCardProps): React.ReactElement {
           <span>Premium</span>
         </div>
       )}
-      <div className="favorites__image-wrapper place-card__image-wrapper">
+      <Link to={`${AppRoutes.Offer}${props.Id}`} className="favorites__image-wrapper place-card__image-wrapper">
         <a href="#">
           <img className="place-card__image" src={props.ImagePath} width="260" height="200" alt="Place image"/>
         </a>
-      </div>
+      </Link>
       <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">

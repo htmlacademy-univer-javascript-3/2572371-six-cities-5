@@ -24,7 +24,7 @@ const List = ({cities}: ICitiesListProps) => {
               <a
                 className={`locations__item-link tabs__item ${city === activeCity ? 'tabs__item--active' : ''}`}
                 href="#"
-                onMouseOver={() => onCityClick(city)}
+                onClick={() => onCityClick(city)}
               >
                 <span>{city}</span>
               </a>

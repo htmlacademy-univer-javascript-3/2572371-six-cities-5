@@ -5,6 +5,7 @@ import {FullOffer} from '../types/fullOffer.ts';
 import UserReview from '../types/user-review.ts';
 
 export const setOffersList = createAction<{offers: Offer[]}>('offerList/matchOffers');
+export const upsertOfferFavorite = createAction<FullOffer>('offerList/upsert');
 export const setActiveCity = createAction<string>('navigation/setActiveCity');
 export const setSortOption = createAction<{sortOption: SortOption}>('navigation/setSortOption');
 export const setOfferListLoading = createAction<boolean>('offerList/offerListLoading');
@@ -14,3 +15,6 @@ export const setToken = createAction<string>('auth/token');
 export const setOffer = createAction<FullOffer>('offerList/offer');
 export const setReviews = createAction<UserReview[]>('offerList/reviews');
 export const setNearby = createAction<Offer[]>('offerList/nearby');
+export const incrementFavorites = createAction('favorites/inc');
+export const decrementFavorites = createAction('favorites/dec');
+export const setFavoritesList = createAction<Offer[]>('favorites/list');
