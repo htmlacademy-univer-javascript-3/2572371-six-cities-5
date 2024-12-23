@@ -9,7 +9,7 @@ import React from 'react';
 import AppRoutes from '../constants/routes.ts';
 import Layout from '../pages/layout/layout.tsx';
 import {Provider} from 'react-redux';
-import store from '../store';
+import {store} from '../store';
 
 function App(): React.ReactElement {
   return (

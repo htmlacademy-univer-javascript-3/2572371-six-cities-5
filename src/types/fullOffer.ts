@@ -1,5 +1,6 @@
 import City from './city.ts';
 import {User} from './user.ts';
+import {Location} from './location.ts';
 
 export type FullOffer =
   {

@@ -6,8 +6,8 @@ import {
   setAuthorizationStatus, setFavoritesList,
   setLogin, setNearby, setOffer,
   setOfferListLoading,
-  setOffersList, setReviews,
-  setSortOption, setToken, upsertOfferFavorite
+  setOffersList, setReviews, setReviewSending,
+  setSortOption, upsertOfferFavorite
 } from './action.ts';
 import Offer from '../types/offer.ts';
 import SortOption from '../types/sort-option.ts';
@@ -15,7 +15,7 @@ import {FullOffer} from '../types/fullOffer.ts';
 import UserReview from '../types/user-review.ts';
 import {CityNames} from '../constants/cities.ts';
 
-interface IState {
+export interface IState {
   currentCity: string;
   offers: Offer[] | null;
   sortOption: SortOption;
@@ -25,9 +25,9 @@ interface IState {
   selectedOffer: FullOffer | null;
   selectedOfferNearby: Offer[] | null;
   selectedOffersReviews: UserReview[] | null;
-  token: string | null;
   favoritesCount: number;
   favoritesList: Offer[] | null;
+  isReviewSending: boolean;
 }
 
 const initialState: IState = {
@@ -40,9 +40,9 @@ const initialState: IState = {
   selectedOffer: null,
   selectedOfferNearby: null,
   selectedOffersReviews: null,
-  token: null,
   favoritesCount: 0,
   favoritesList: null,
+  isReviewSending: false,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -77,9 +77,6 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(setNearby, (state, action) => {
       state.selectedOfferNearby = action.payload;
     })
-    .addCase(setToken, (state, action) => {
-      state.token = action.payload;
-    })
     .addCase(upsertOfferFavorite, (state, action) => {
       const offer = action.payload;
       const offers = state.offers;
@@ -96,6 +93,9 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setFavoritesList, (state, action) => {
       state.favoritesList = action.payload;
+    })
+    .addCase(setReviewSending, (state, action) => {
+      state.isReviewSending = action.payload;
     });
 });
 
