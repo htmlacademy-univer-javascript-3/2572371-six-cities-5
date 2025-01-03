@@ -57,6 +57,7 @@ export const addToFavorites = createAsyncThunk<void, string, {
   async (id, {dispatch, extra: api}) => {
     await api.post<FullOffer>(`${APIRoute.Favorites}/${id}/1`);
     dispatch(fetchOffersAction());
+    dispatch(fetchFavoritesOffersAction());
   },
 );
 
@@ -68,6 +69,7 @@ export const removeFromFavorites = createAsyncThunk<void, string, {
   async (id, {dispatch, extra: api}) => {
     await api.post<FullOffer>(`${APIRoute.Favorites}/${id}/0`);
     dispatch(fetchOffersAction());
+    dispatch(fetchFavoritesOffersAction());
   },
 );
 

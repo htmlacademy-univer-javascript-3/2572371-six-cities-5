@@ -27,6 +27,7 @@ function OffersListBase({Offers, ClassName, SetActiveOffer}: OffersListProps) {
             Premium={offer.isPremium}
             selectOffer={activeOffer}
             Rating={offer.rating}
+            IsFavorite={false}
           />
         ))
       }

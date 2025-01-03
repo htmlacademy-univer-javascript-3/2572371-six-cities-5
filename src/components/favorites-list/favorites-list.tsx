@@ -1,5 +1,5 @@
-import FavoritesCard from '../favorites-card/favorites-card.tsx';
 import Offer from '../../types/offer.ts';
+import {Card} from '../card/card.tsx';
 
 function groupByLocation(offers: Offer[]): { [key: string]: Offer[] } {
   return offers.reduce((acc, offer) => {
@@ -28,7 +28,7 @@ function FavoritesList({offers}: { offers: Offer[] }) {
             </div>
             <div className="favorites__places">
               {groupedOffers[location].map((offer) => (
-                <FavoritesCard
+                <Card
                   Id={offer.id}
                   key={offer.id}
                   Premium={offer.isPremium}
@@ -36,6 +36,10 @@ function FavoritesList({offers}: { offers: Offer[] }) {
                   Type={offer.type}
                   ImagePath={offer.previewImage}
                   Price={offer.price}
+                  Bookmarked={offer.isFavorite}
+                  selectOffer={() => {}}
+                  Rating={offer.rating}
+                  IsFavorite
                 />
               ))}
             </div>
