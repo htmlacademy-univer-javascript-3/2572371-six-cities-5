@@ -3,15 +3,14 @@ import React from 'react';
 import useAppSelector from '../../hooks/use-app-selector.ts';
 import AppRoutes from '../../constants/routes.ts';
 
-type PrivateRouteProps = {
+type GuestRouteProps = {
   children: React.ReactElement | null;
-  childrenWhenNotLogged: React.ReactElement | null;
 }
 
-function PrivateRoute({ children, childrenWhenNotLogged } : PrivateRouteProps) {
+function GuestRoute({children} : GuestRouteProps) {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
-  return authorizationStatus ? children : childrenWhenNotLogged || <Navigate to={AppRoutes.Login} />;
+  return !authorizationStatus ? children : <Navigate to={AppRoutes.Main} />;
 }
 
-export default PrivateRoute;
+export default GuestRoute;

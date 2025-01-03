@@ -6,17 +6,18 @@ import {
   setAuthorizationStatus, setFavoritesList,
   setLogin, setNearby, setOffer,
   setOfferListLoading,
-  setOffersList, setReviews,
-  setSortOption, setToken, upsertOfferFavorite
+  setOffersList, setReviews, setReviewSending, setReviewSendingError,
+  setSortOption, upsertOfferFavorite
 } from './action.ts';
 import Offer from '../types/offer.ts';
 import SortOption from '../types/sort-option.ts';
 import {FullOffer} from '../types/fullOffer.ts';
 import UserReview from '../types/user-review.ts';
-import {CityNames} from '../constants/cities.ts';
+import {cities} from '../constants/cities.ts';
+import City from '../types/city.ts';
 
-interface IState {
-  currentCity: string;
+export interface IState {
+  currentCity: City;
   offers: Offer[] | null;
   sortOption: SortOption;
   loading: boolean;
@@ -25,14 +26,15 @@ interface IState {
   selectedOffer: FullOffer | null;
   selectedOfferNearby: Offer[] | null;
   selectedOffersReviews: UserReview[] | null;
-  token: string | null;
   favoritesCount: number;
   favoritesList: Offer[] | null;
+  isReviewSending: boolean;
+  reviewSendingError: string | null;
 }
 
 const initialState: IState = {
   loading: false,
-  currentCity: CityNames[0],
+  currentCity: cities[0],
   offers: null,
   sortOption: SortOption.Popular,
   authorizationStatus: false,
@@ -40,9 +42,10 @@ const initialState: IState = {
   selectedOffer: null,
   selectedOfferNearby: null,
   selectedOffersReviews: null,
-  token: null,
   favoritesCount: 0,
   favoritesList: null,
+  isReviewSending: false,
+  reviewSendingError: null,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -77,9 +80,6 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(setNearby, (state, action) => {
       state.selectedOfferNearby = action.payload;
     })
-    .addCase(setToken, (state, action) => {
-      state.token = action.payload;
-    })
     .addCase(upsertOfferFavorite, (state, action) => {
       const offer = action.payload;
       const offers = state.offers;
@@ -96,6 +96,12 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setFavoritesList, (state, action) => {
       state.favoritesList = action.payload;
+    })
+    .addCase(setReviewSending, (state, action) => {
+      state.isReviewSending = action.payload;
+    })
+    .addCase(setReviewSendingError, (state, action) => {
+      state.reviewSendingError = action.payload;
     });
 });
 

@@ -9,14 +9,15 @@ import {
   setLogin,
   setOfferListLoading,
   setOffersList,
-  setToken, setFavoritesList
+  setFavoritesList
 } from '../store/action.ts';
 import {FullOffer} from '../types/fullOffer.ts';
 import UserReview from '../types/user-review.ts';
-import store from '../store';
+import {AppDispatch} from '../store';
+import {saveToken} from './token.ts';
 
 
-const APIRoute = {
+export const APIRoute = {
   Offers: '/offers',
   Login: '/login',
   Comments: '/comments',
@@ -49,29 +50,31 @@ export const fetchFavoritesOffersAction = createAsyncThunk<void, undefined, {
 
 
 export const addToFavorites = createAsyncThunk<void, string, {
-  dispatch: Dispatch;
+  dispatch: AppDispatch;
   extra: AxiosInstance;
 }>(
   'offerList/addToFavorites',
-  async (id, {extra: api}) => {
+  async (id, {dispatch, extra: api}) => {
     await api.post<FullOffer>(`${APIRoute.Favorites}/${id}/1`);
-    store.dispatch(fetchOffersAction());
+    dispatch(fetchOffersAction());
+    dispatch(fetchFavoritesOffersAction());
   },
 );
 
 export const removeFromFavorites = createAsyncThunk<void, string, {
-  dispatch: Dispatch;
+  dispatch: AppDispatch;
   extra: AxiosInstance;
 }>(
   'offerList/addToFavorites',
-  async (id, {extra: api}) => {
+  async (id, {dispatch, extra: api}) => {
     await api.post<FullOffer>(`${APIRoute.Favorites}/${id}/0`);
-    store.dispatch(fetchOffersAction());
+    dispatch(fetchOffersAction());
+    dispatch(fetchFavoritesOffersAction());
   },
 );
 
 export const fetchNearby = createAsyncThunk<void, string, {
-  dispatch: Dispatch;
+  dispatch: AppDispatch;
   extra: AxiosInstance;
 }>(
   'offerList/fetchNearby',
@@ -82,7 +85,7 @@ export const fetchNearby = createAsyncThunk<void, string, {
 );
 
 export const fetchReviews = createAsyncThunk<void, string, {
-  dispatch: Dispatch;
+  dispatch: AppDispatch;
   extra: AxiosInstance;
 }>(
   'offerList/fetchReviews',
@@ -92,8 +95,19 @@ export const fetchReviews = createAsyncThunk<void, string, {
   },
 );
 
+export const sendReview = createAsyncThunk<void, { id: string; comment: string; rating: number }, {
+  dispatch: AppDispatch;
+  extra: AxiosInstance;
+}>(
+  'offerList/sendReview',
+  async ({id, comment, rating}, {dispatch, extra: api}) => {
+    await api.post(`${APIRoute.Comments}/${id}`, {comment, rating});
+    dispatch(fetchReviews(id));
+  },
+);
+
 export const fetchOffer = createAsyncThunk<void, string, {
-  dispatch: Dispatch;
+  dispatch: AppDispatch;
   extra: AxiosInstance;
 }>(
   'offerList/fetchOffer',
@@ -104,7 +118,7 @@ export const fetchOffer = createAsyncThunk<void, string, {
 );
 
 export const checkAuth = createAsyncThunk<void, undefined, {
-  dispatch: Dispatch;
+  dispatch: AppDispatch;
   extra: AxiosInstance;
 }>(
   'auth/checkAuth',
@@ -112,7 +126,7 @@ export const checkAuth = createAsyncThunk<void, undefined, {
     try {
       const {data} = await api.get<LoginResponse>(APIRoute.Login);
       dispatch(setLogin(data.email));
-      dispatch(setToken(data.token));
+      saveToken(data.token);
       dispatch(setAuthorizationStatus(true));
     } catch (err) {
       const error = err as { response?: { status?: number } };
@@ -139,7 +153,7 @@ type LoginResponse =
 
 
 export const loginAction = createAsyncThunk<void, LoginCredentials, {
-  dispatch: Dispatch;
+  dispatch: AppDispatch;
   extra: AxiosInstance;
 }>(
   'auth/login',
@@ -148,7 +162,7 @@ export const loginAction = createAsyncThunk<void, LoginCredentials, {
       const {data} = await api.post<LoginResponse>(APIRoute.Login, {email, password});
       dispatch(setAuthorizationStatus(true));
       dispatch(setLogin(data.email));
-      dispatch(setToken(data.token));
+      saveToken(data.token);
     } catch (err) { /* empty */
     }
   },

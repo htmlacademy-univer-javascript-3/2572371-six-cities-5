@@ -1,9 +1,16 @@
 import FavoritesList from '../../components/favorites-list/favorites-list.tsx';
 import useAppSelector from '../../hooks/use-app-selector.ts';
 import Spinner from '../../components/spinner/spinner.tsx';
+import {useAppDispatch} from '../../store';
+import {fetchFavoritesOffersAction} from '../../api/client.ts';
+import {useEffect} from 'react';
 
 function FavoritesPage() {
   const offers = useAppSelector((state) => state.favoritesList);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchFavoritesOffersAction());
+  }, [dispatch]);
   return (
     <>
       <main className="page__main page__main--favorites">

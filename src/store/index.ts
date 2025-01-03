@@ -1,15 +1,19 @@
 import {configureStore} from '@reduxjs/toolkit';
-import api from '../api/api.ts';
+import {createAPI} from '../api/api.ts';
 import {reducer} from './reducer.ts';
+import {useDispatch} from 'react-redux';
 
-const store = configureStore({
+export const store = configureStore({
   reducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       thunk: {
-        extraArgument: api,
+        extraArgument: createAPI(),
       },
     }),
 });
 
-export default store;
+export type AppDispatch = typeof store.dispatch;
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+
+

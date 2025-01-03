@@ -9,7 +9,8 @@ import React from 'react';
 import AppRoutes from '../constants/routes.ts';
 import Layout from '../pages/layout/layout.tsx';
 import {Provider} from 'react-redux';
-import store from '../store';
+import {store} from '../store';
+import GuestRoute from '../components/guest-route/guest-route.tsx';
 
 function App(): React.ReactElement {
   return (
@@ -23,7 +24,7 @@ function App(): React.ReactElement {
               </Layout>
             }
           />
-          <Route path={AppRoutes.Login} element={<LoginPage/>}/>
+          <Route path={AppRoutes.Login} element={<GuestRoute><LoginPage/></GuestRoute>}/>
           <Route path={AppRoutes.Favorites}
             element={
               <PrivateRoute childrenWhenNotLogged={null}>

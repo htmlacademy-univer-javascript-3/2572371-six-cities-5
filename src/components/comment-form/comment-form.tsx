@@ -1,64 +1,97 @@
-import {Fragment, useState} from 'react';
+import {Fragment, useCallback, useState} from 'react';
+import {sendReview} from '../../api/client.ts';
+import {useAppDispatch} from '../../store';
+import {useSelector} from 'react-redux';
+import {IState} from '../../store/reducer.ts';
+import {setReviewSending, setReviewSendingError} from '../../store/action.ts';
 
 type CommentFormState = {
   rating: number;
   review: string;
 }
 
+function StarInput({rating, setRating, disabled, checked}: {rating: number; setRating: (rating: number) => void; disabled: boolean; checked: boolean}) {
+  return (
+    <Fragment>
+      <input disabled={disabled} className="form__rating-input visually-hidden" name="rating" value={rating} id={`${rating}-stars`}
+        onChange={(e) => {
+          e.preventDefault();
+          setRating(rating);
+        }} type="radio" checked={checked}
+      />
+      <label htmlFor={`${rating}-stars`} className="reviews__rating-label form__rating-label" title={`${rating}`}>
+        <svg className="form__star-image" width="37" height="33">
+          <use xlinkHref="#icon-star"></use>
+        </svg>
+      </label>
+    </Fragment>
+  );
+}
+
 function CommentForm() {
-  const [state, setState] = useState<CommentFormState>({
+  const [commentFormState, setCommentFormState] = useState<CommentFormState>({
     rating: 0,
     review: '',
   });
+
+  const dispatch = useAppDispatch();
+  const currentOffer = useSelector((state: IState) => state.selectedOffer);
+  const sending = useSelector((state: IState) => state.isReviewSending);
+  const commentSendingError = useSelector((state: IState) => state.reviewSendingError);
+
+  const handleSubmit = useCallback(
+    () => {
+      dispatch(setReviewSending(true));
+
+      dispatch(sendReview({id: currentOffer!.id, comment: commentFormState.review, rating: commentFormState.rating}))
+        .unwrap()
+        .then(() => {
+          setCommentFormState({review: '', rating: 0});
+          dispatch(setReviewSendingError(null));
+        })
+        .catch(() => dispatch(setReviewSendingError('Error')))
+        .finally(() => dispatch(setReviewSending(false)));
+    },
+    [commentFormState.rating, commentFormState.review, currentOffer, dispatch]
+  );
+
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <div className="reviews__form form" >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
-        <span style={{width: `${state.rating * 20}%`}}></span>
-        {Array.from({length: state.rating}, (_, i) => (
-          <Fragment key={i}>
-            <input className="form__rating-input visually-hidden" name="rating" value={i + 1} id={`${i + 1}-stars`}
-              onInput={() => setState({...state, rating: i + 1})} type="radio"
-            />
-            <label htmlFor={`${i + 1}-stars`} className="reviews__rating-label form__rating-label" title="perfect">
-              <svg className="form__star-image" width="37" height="33">
-                <use xlinkHref="#icon-star"></use>
-              </svg>
-            </label>
-          </Fragment>
-        ))}
-
-        {Array.from({length: 5 - state.rating}, (_, i) => (
-          <Fragment key={state.rating + i}>
-            <input className="form__rating-input visually-hidden" name="rating" value={state.rating + i + 1}
-              id={`${state.rating + i + 1}-stars`}
-              onInput={() => setState({...state, rating: state.rating + i + 1})} type="radio"
-            />
-            <label htmlFor={`${state.rating + i + 1}-stars`} className="reviews__rating-label form__rating-label"
-              title="perfect"
-            >
-              <svg className="form__star-image" width="37" height="33">
-                <use xlinkHref="#icon-star"></use>
-              </svg>
-            </label>
-          </Fragment>
-        ))}
+        {commentFormState.rating === 0 ? (<span style={{width: `${commentFormState.rating * 20}%`}}></span>) : null}
+        {Array.from({length: 5}, (_, i) => i).map((i) => (
+          <StarInput key = {i}
+            rating={5 - i}
+            setRating={(rating) => setCommentFormState({...commentFormState, rating})}
+            disabled={sending}
+            checked={commentFormState.rating === 5 - i}
+          />))}
       </div>
       <textarea className="reviews__textarea form__textarea"
+        disabled={sending}
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        onInput={(evt) => setState({...state, review: (evt.target as HTMLTextAreaElement).value})}
+        onInput={(evt) => setCommentFormState({...commentFormState, review: (evt.target as HTMLTextAreaElement).value})}
+        value={commentFormState.review}
       >
       </textarea>
+      {commentSendingError && (<div style={{color: '#D64C5B'}}>{commentSendingError}</div>)}
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay
           with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled={false}>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={commentFormState.rating === 0
+          || commentFormState.review.length < 50
+          || commentFormState.review.length > 300
+          || sending}
+        onClick={handleSubmit}
+        >Submit
+        </button>
       </div>
-    </form>);
+    </div>);
 }
 
 export default CommentForm;

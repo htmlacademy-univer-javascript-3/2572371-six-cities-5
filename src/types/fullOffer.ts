@@ -1,5 +1,6 @@
 import City from './city.ts';
 import {User} from './user.ts';
+import {Location} from './location.ts';
 
 export type FullOffer =
   {
@@ -14,8 +15,8 @@ export type FullOffer =
     rating: number;
     description: string;
     bedrooms: number;
-    goods: [string];
+    goods: string[];
     host: User;
-    images: [string];
+    images: string[];
     maxAdults: number;
   };
