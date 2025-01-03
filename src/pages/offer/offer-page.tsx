@@ -5,7 +5,7 @@ import {MapComponent} from '../../components/map/map-component.tsx';
 import {OfferList} from '../../components/offers-list/offers-list.tsx';
 import useAppSelector from '../../hooks/use-app-selector.ts';
 import Spinner from '../../components/spinner/spinner.tsx';
-import store from '../../store';
+import {store} from '../../store';
 import {fetchNearby, fetchOffer, fetchReviews} from '../../api/client.ts';
 import {useParams} from 'react-router-dom';
 

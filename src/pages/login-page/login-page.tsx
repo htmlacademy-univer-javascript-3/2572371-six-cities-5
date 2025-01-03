@@ -1,11 +1,12 @@
 import {fetchFavoritesOffersAction, fetchOffersAction, loginAction,} from '../../api/client.ts';
-import store from '../../store/index.ts';
+import {store} from '../../store';
 import {Link, useNavigate} from 'react-router-dom';
 import AppRoutes from '../../constants/routes.ts';
+import {FormEvent} from 'react';
 
 function LoginPage() {
   const navigate = useNavigate();
-  const authorize = (event: React.FormEvent<HTMLFormElement>) => {
+  const authorize = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const email = formData.get('email') as string;

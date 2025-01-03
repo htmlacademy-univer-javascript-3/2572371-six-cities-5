@@ -27,13 +27,13 @@ import {IState} from '../store/reducer';
 import Offer from '../types/offer';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import {FullOffer} from '../types/fullOffer';
-import {Action, ThunkDispatch} from '@reduxjs/toolkit';
+import {Action} from '@reduxjs/toolkit';
 import {createAPI} from './api.ts';
+import {AppThunkDispatch} from '../utils/with-store.tsx';
 
 
 const axios = createAPI();
 const middlewares = [thunk.withExtraArgument(axios)];
-type AppThunkDispatch = ThunkDispatch<IState, ReturnType<typeof createAPI>, Action>;
 const mockStore = configureMockStore<IState, Action<string>, AppThunkDispatch>(middlewares);
 const mock = new MockAdapter(axios);
 export const extractActionsTypes = (actions: Action<string>[]) => actions.map(({type}) => type);

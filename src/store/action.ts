@@ -18,3 +18,4 @@ export const incrementFavorites = createAction('favorites/inc');
 export const decrementFavorites = createAction('favorites/dec');
 export const setFavoritesList = createAction<Offer[]>('favorites/list');
 export const setReviewSending = createAction<boolean>('review/sending');
+export const setReviewSendingError = createAction<string | null>('review/sendingError');

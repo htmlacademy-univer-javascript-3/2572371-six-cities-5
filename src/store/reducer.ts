@@ -6,7 +6,7 @@ import {
   setAuthorizationStatus, setFavoritesList,
   setLogin, setNearby, setOffer,
   setOfferListLoading,
-  setOffersList, setReviews, setReviewSending,
+  setOffersList, setReviews, setReviewSending, setReviewSendingError,
   setSortOption, upsertOfferFavorite
 } from './action.ts';
 import Offer from '../types/offer.ts';
@@ -28,6 +28,7 @@ export interface IState {
   favoritesCount: number;
   favoritesList: Offer[] | null;
   isReviewSending: boolean;
+  reviewSendingError: string | null;
 }
 
 const initialState: IState = {
@@ -43,6 +44,7 @@ const initialState: IState = {
   favoritesCount: 0,
   favoritesList: null,
   isReviewSending: false,
+  reviewSendingError: null,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -96,6 +98,9 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setReviewSending, (state, action) => {
       state.isReviewSending = action.payload;
+    })
+    .addCase(setReviewSendingError, (state, action) => {
+      state.reviewSendingError = action.payload;
     });
 });
 

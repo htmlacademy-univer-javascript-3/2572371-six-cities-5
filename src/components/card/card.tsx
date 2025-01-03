@@ -1,7 +1,7 @@
 import React, {memo} from 'react';
 import {Link} from 'react-router-dom';
 import AppRoutes from '../../constants/routes.ts';
-import store from '../../store';
+import {store} from '../../store';
 import {addToFavorites, removeFromFavorites} from '../../api/client.ts';
 import useAppSelector from '../../hooks/use-app-selector.ts';
 

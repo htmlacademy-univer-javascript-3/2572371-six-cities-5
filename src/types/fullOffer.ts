@@ -15,8 +15,8 @@ export type FullOffer =
     rating: number;
     description: string;
     bedrooms: number;
-    goods: [string];
+    goods: string[];
     host: User;
-    images: [string];
+    images: string[];
     maxAdults: number;
   };

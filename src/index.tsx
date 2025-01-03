@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import App from './app/app.tsx';
-import store from './store';
+import {store} from './store';
 import {checkAuth, fetchOffersAction} from './api/client.ts';
 
 store.dispatch(fetchOffersAction());
