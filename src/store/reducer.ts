@@ -13,10 +13,11 @@ import Offer from '../types/offer.ts';
 import SortOption from '../types/sort-option.ts';
 import {FullOffer} from '../types/fullOffer.ts';
 import UserReview from '../types/user-review.ts';
-import {CityNames} from '../constants/cities.ts';
+import {cities} from '../constants/cities.ts';
+import City from '../types/city.ts';
 
 export interface IState {
-  currentCity: string;
+  currentCity: City;
   offers: Offer[] | null;
   sortOption: SortOption;
   loading: boolean;
@@ -33,7 +34,7 @@ export interface IState {
 
 const initialState: IState = {
   loading: false,
-  currentCity: CityNames[0],
+  currentCity: cities[0],
   offers: null,
   sortOption: SortOption.Popular,
   authorizationStatus: false,

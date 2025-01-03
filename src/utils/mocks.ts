@@ -1,12 +1,12 @@
 import {IState} from '../store/reducer.ts';
-import {CityNames} from '../constants/cities.ts';
+import {cities} from '../constants/cities.ts';
 import SortOption from '../types/sort-option.ts';
 
 export function makeFakeStore(store: Partial<IState> = {}) : IState {
   return {
     reviewSendingError: store.reviewSendingError || null,
     loading: store.loading || false,
-    currentCity: store.currentCity || CityNames[0],
+    currentCity: store.currentCity || cities[0],
     offers: store.offers || [{
       id: '1',
       title: 'Offer 1',
