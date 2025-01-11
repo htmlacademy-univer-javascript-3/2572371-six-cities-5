@@ -23,7 +23,7 @@ export function BookmarkButton(props: BookmarkButtonProps): React.ReactElement {
   }, [dispatch, props.Id]);
 
   const onClick = useCallback(() => {
-    if(isAuthorized) {
+    if(!isAuthorized) {
       navigate(AppRoutes.Login);
       return;
     }

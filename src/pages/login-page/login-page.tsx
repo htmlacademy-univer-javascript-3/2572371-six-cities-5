@@ -2,7 +2,7 @@ import {fetchFavoritesOffersAction, fetchOffersAction, loginAction,} from '../..
 import {useAppDispatch} from '../../store';
 import {Link, useNavigate} from 'react-router-dom';
 import AppRoutes from '../../constants/routes.ts';
-import {FormEvent} from 'react';
+import {FormEvent, useEffect} from 'react';
 import useAppSelector from '../../hooks/use-app-selector.ts';
 import {setAuthorizationError} from '../../store/authorization/action.ts';
 import {setActiveCity} from '../../store/main-page/actions.ts';
@@ -21,6 +21,9 @@ function LoginPage() {
     dispatch(setActiveCity(city));
     navigate(AppRoutes.Main);
   };
+  useEffect(() => {
+    dispatch(setAuthorizationError(null));
+  }, [dispatch]);
   const authorize = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
