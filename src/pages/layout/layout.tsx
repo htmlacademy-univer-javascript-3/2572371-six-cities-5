@@ -1,20 +1,27 @@
-import React, {ReactNode} from 'react';
+import React, {ReactNode, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import AppRoutes from '../../constants/routes.ts';
 import useAppSelector from '../../hooks/use-app-selector.ts';
 import {dropToken} from '../../api/token.ts';
 import {setAuthorizationStatus} from '../../store/authorization/action.ts';
-import {fetchOffersAction} from '../../api/client.ts';
-import {useAppDispatch} from '../../store';
+import {fetchFavoritesOffersAction, fetchOffersAction} from '../../api/client.ts';
+import {store, useAppDispatch} from '../../store';
+import {setFavoritesList} from '../../store/favorites/action.ts';
 
 function Layout({children}: { children: ReactNode }): React.ReactElement {
   const login = useAppSelector((state) => state.auth.login);
   const loggedIn = useAppSelector((state) => state.auth.authorizationStatus);
   const favoritesCount = useAppSelector((state) => state.favorites.favoritesList?.length || 0);
   const dispatch = useAppDispatch();
+  useEffect(() => {
+    if(login) {
+      store.dispatch(fetchFavoritesOffersAction());
+    }
+  }, [login]);
   const signOut = () => {
     dispatch(setAuthorizationStatus(false));
     dispatch(fetchOffersAction());
+    dispatch(setFavoritesList([]));
     dropToken();
   };
   return (

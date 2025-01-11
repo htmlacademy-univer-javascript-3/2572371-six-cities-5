@@ -6,9 +6,9 @@ import UserReview from '../types/user-review.ts';
 import {AppDispatch} from '../store';
 import {saveToken} from './token.ts';
 import {setOfferListLoading, setOffersList} from '../store/main-page/actions.ts';
-import {setFavoritesList} from '../store/favorites/action.ts';
 import {setNearby, setOffer, setReviews} from '../store/offer/action.ts';
 import {setAuthorizationStatus, setLogin} from '../store/authorization/action.ts';
+import {setFavoritesList} from '../store/favorites/action.ts';
 
 
 export const APIRoute = {
