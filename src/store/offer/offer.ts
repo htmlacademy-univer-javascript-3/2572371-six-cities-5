@@ -1,4 +1,4 @@
-import {FullOffer} from '../../types/fullOffer.ts';
+import {FullOffer} from '../../types/full-offer.ts';
 import Offer from '../../types/offer.ts';
 import UserReview from '../../types/user-review.ts';
 import {setNearby, setOffer, setReviews} from './action.ts';

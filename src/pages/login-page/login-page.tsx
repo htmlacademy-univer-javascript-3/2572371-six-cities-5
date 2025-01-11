@@ -5,10 +5,22 @@ import AppRoutes from '../../constants/routes.ts';
 import {FormEvent} from 'react';
 import useAppSelector from '../../hooks/use-app-selector.ts';
 import {setAuthorizationError} from '../../store/authorization/action.ts';
+import {setActiveCity} from '../../store/main-page/actions.ts';
+import {cities} from '../../constants/cities.ts';
+
+function getRandomInt(max: number) {
+  return Math.floor(Math.random() * max);
+}
+
 
 function LoginPage() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const city = cities[getRandomInt(cities.length)];
+  const navigateToRandomCity = () => {
+    dispatch(setActiveCity(city));
+    navigate(AppRoutes.Main);
+  };
   const authorize = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -62,10 +74,10 @@ function LoginPage() {
             </form>
           </section>
           <section className="locations locations--login locations--current">
-            <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
-              </a>
+            <div className="locations__item" onClick={navigateToRandomCity}>
+              <div className="locations__item-link">
+                <span>{city.name}</span>
+              </div>
             </div>
           </section>
         </div>

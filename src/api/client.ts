@@ -1,7 +1,7 @@
 import {createAsyncThunk, Dispatch} from '@reduxjs/toolkit';
 import {AxiosInstance} from 'axios';
 import Offer from '../types/offer.ts';
-import {FullOffer} from '../types/fullOffer.ts';
+import {FullOffer} from '../types/full-offer.ts';
 import UserReview from '../types/user-review.ts';
 import {AppDispatch} from '../store';
 import {saveToken} from './token.ts';

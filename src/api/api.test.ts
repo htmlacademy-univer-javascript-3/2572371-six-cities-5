@@ -15,7 +15,7 @@ import {
 } from './client';
 import Offer from '../types/offer';
 import {configureMockStore} from '@jedmao/redux-mock-store';
-import {FullOffer} from '../types/fullOffer';
+import {FullOffer} from '../types/full-offer.ts';
 import {Action} from '@reduxjs/toolkit';
 import {createAPI} from './api.ts';
 import {AppThunkDispatch} from '../utils/with-store.tsx';
