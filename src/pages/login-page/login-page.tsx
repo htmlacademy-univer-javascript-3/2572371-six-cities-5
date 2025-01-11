@@ -1,25 +1,50 @@
 import {fetchFavoritesOffersAction, fetchOffersAction, loginAction,} from '../../api/client.ts';
-import {store} from '../../store';
+import {useAppDispatch} from '../../store';
 import {Link, useNavigate} from 'react-router-dom';
 import AppRoutes from '../../constants/routes.ts';
-import {FormEvent} from 'react';
+import {FormEvent, useEffect} from 'react';
+import useAppSelector from '../../hooks/use-app-selector.ts';
+import {setAuthorizationError} from '../../store/authorization/action.ts';
+import {setActiveCity} from '../../store/main-page/actions.ts';
+import {cities} from '../../constants/cities.ts';
+
+function getRandomInt(max: number) {
+  return Math.floor(Math.random() * max);
+}
+
 
 function LoginPage() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const city = cities[getRandomInt(cities.length)];
+  const navigateToRandomCity = () => {
+    dispatch(setActiveCity(city));
+    navigate(AppRoutes.Main);
+  };
+  useEffect(() => {
+    dispatch(setAuthorizationError(null));
+  }, [dispatch]);
   const authorize = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
-    store.dispatch(loginAction({email, password})).then(() => {
-      navigate(AppRoutes.Main);
-    }).then(() => {
-      store.dispatch(fetchOffersAction());
-    })
+    dispatch(loginAction({email, password}))
+      .unwrap()
+      .then(() => setAuthorizationError(null))
       .then(() => {
-        store.dispatch(fetchFavoritesOffersAction());
-      });
+        navigate(AppRoutes.Main);
+      }).then(() => {
+        dispatch(fetchOffersAction());
+      })
+      .then(() => {
+        dispatch(fetchFavoritesOffersAction());
+      })
+      .catch((reason: { response?: { status?: number; message?: string }}) =>
+        dispatch(setAuthorizationError(reason.response?.message || 'Неизвестная ошибка'))
+      );
   };
+  const error = useAppSelector((state) => state.auth.authorizationError);
   return (
     <div className="page page--gray page--login">
       <header className="header">
@@ -48,13 +73,14 @@ function LoginPage() {
                 <input className="login__input form__input" type="password" name="password" placeholder="Password" required/>
               </div>
               <button className="login__submit form__submit button" type="submit">Sign in</button>
+              {error && (<div style={{color: '#D64C5B'}}>{error}</div>)}
             </form>
           </section>
           <section className="locations locations--login locations--current">
-            <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
-              </a>
+            <div className="locations__item" onClick={navigateToRandomCity}>
+              <div className="locations__item-link">
+                <span>{city.name}</span>
+              </div>
             </div>
           </section>
         </div>

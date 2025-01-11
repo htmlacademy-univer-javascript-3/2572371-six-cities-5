@@ -26,8 +26,11 @@ describe('Application Routing', () => {
   it('should render LoginPage when user navigate to "/login"', () => {
     const withHistoryComponent = withHistory(<LoginPage />, mockHistory);
     const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore({
-      authorizationStatus: false,
-      login: null
+      auth: {
+        authorizationError: null,
+        authorizationStatus: false,
+        login: null
+      }
     }));
     mockHistory.push(AppRoutes.Login);
 

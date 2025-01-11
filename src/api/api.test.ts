@@ -13,28 +13,22 @@ import {
   loginAction,
   APIRoute
 } from './client';
-import {
-  setNearby,
-  setOffer,
-  setReviews,
-  setAuthorizationStatus,
-  setLogin,
-  setOfferListLoading,
-  setOffersList,
-  setFavoritesList
-} from '../store/action';
-import {IState} from '../store/reducer';
 import Offer from '../types/offer';
 import {configureMockStore} from '@jedmao/redux-mock-store';
-import {FullOffer} from '../types/fullOffer';
+import {FullOffer} from '../types/full-offer.ts';
 import {Action} from '@reduxjs/toolkit';
 import {createAPI} from './api.ts';
 import {AppThunkDispatch} from '../utils/with-store.tsx';
+import {setOfferListLoading, setOffersList} from '../store/main-page/actions.ts';
+import {setFavoritesList} from '../store/favorites/action.ts';
+import {setNearby, setOffer, setReviews} from '../store/offer/action.ts';
+import {setAuthorizationStatus, setLogin} from '../store/authorization/action.ts';
+import {State} from '../store';
 
 
 const axios = createAPI();
 const middlewares = [thunk.withExtraArgument(axios)];
-const mockStore = configureMockStore<IState, Action<string>, AppThunkDispatch>(middlewares);
+const mockStore = configureMockStore<State, Action<string>, AppThunkDispatch>(middlewares);
 const mock = new MockAdapter(axios);
 export const extractActionsTypes = (actions: Action<string>[]) => actions.map(({type}) => type);
 

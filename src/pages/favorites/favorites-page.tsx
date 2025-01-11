@@ -6,7 +6,7 @@ import {fetchFavoritesOffersAction} from '../../api/client.ts';
 import {useEffect} from 'react';
 
 function FavoritesPage() {
-  const offers = useAppSelector((state) => state.favoritesList);
+  const offers = useAppSelector((state) => state.favorites.favoritesList);
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchFavoritesOffersAction());
