@@ -2,16 +2,20 @@ import React, {ReactNode} from 'react';
 import {Link} from 'react-router-dom';
 import AppRoutes from '../../constants/routes.ts';
 import useAppSelector from '../../hooks/use-app-selector.ts';
-import {useDispatch} from 'react-redux';
-import {setAuthorizationStatus} from '../../store/action.ts';
+import {dropToken} from '../../api/token.ts';
+import {setAuthorizationStatus} from '../../store/authorization/action.ts';
+import {fetchOffersAction} from '../../api/client.ts';
+import {useAppDispatch} from '../../store';
 
 function Layout({children}: { children: ReactNode }): React.ReactElement {
-  const login = useAppSelector((state) => state.login);
-  const loggedIn = useAppSelector((state) => state.authorizationStatus);
-  const favoritesCount = useAppSelector((state) => state.favoritesCount);
-  const dispatch = useDispatch();
+  const login = useAppSelector((state) => state.auth.login);
+  const loggedIn = useAppSelector((state) => state.auth.authorizationStatus);
+  const favoritesCount = useAppSelector((state) => state.favorites.favoritesList?.length || 0);
+  const dispatch = useAppDispatch();
   const signOut = () => {
     dispatch(setAuthorizationStatus(false));
+    dispatch(fetchOffersAction());
+    dropToken();
   };
   return (
     <div className="page page--gray page--main">
@@ -27,12 +31,12 @@ function Layout({children}: { children: ReactNode }): React.ReactElement {
               <ul className="header__nav-list">
                 {loggedIn && (
                   <li className="header__nav-item user">
-                    <a className="header__nav-link header__nav-link--profile" href="#">
+                    <div className="header__nav-link header__nav-link--profile">
                       <div className="header__avatar-wrapper user__avatar-wrapper">
                       </div>
                       <Link to={AppRoutes.Favorites} className="header__user-name user__name">{login}</Link>
                       <span className="header__favorite-count">{favoritesCount}</span>
-                    </a>
+                    </div>
                   </li>)}
                 <li className="header__nav-item">
                   {!loggedIn ? (

@@ -9,7 +9,7 @@ type PrivateRouteProps = {
 }
 
 function PrivateRoute({ children, childrenWhenNotLogged } : PrivateRouteProps) {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector((state) => state.auth.authorizationStatus);
 
   return authorizationStatus ? children : childrenWhenNotLogged || <Navigate to={AppRoutes.Login} />;
 }

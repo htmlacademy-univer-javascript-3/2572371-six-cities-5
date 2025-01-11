@@ -1,20 +1,14 @@
 import {createAsyncThunk, Dispatch} from '@reduxjs/toolkit';
 import {AxiosInstance} from 'axios';
 import Offer from '../types/offer.ts';
-import {
-  setNearby,
-  setOffer,
-  setReviews,
-  setAuthorizationStatus,
-  setLogin,
-  setOfferListLoading,
-  setOffersList,
-  setFavoritesList
-} from '../store/action.ts';
 import {FullOffer} from '../types/fullOffer.ts';
 import UserReview from '../types/user-review.ts';
 import {AppDispatch} from '../store';
 import {saveToken} from './token.ts';
+import {setOfferListLoading, setOffersList} from '../store/main-page/actions.ts';
+import {setFavoritesList} from '../store/favorites/action.ts';
+import {setNearby, setOffer, setReviews} from '../store/offer/action.ts';
+import {setAuthorizationStatus, setLogin} from '../store/authorization/action.ts';
 
 
 export const APIRoute = {
@@ -158,12 +152,9 @@ export const loginAction = createAsyncThunk<void, LoginCredentials, {
 }>(
   'auth/login',
   async ({email, password}, {dispatch, extra: api}) => {
-    try {
-      const {data} = await api.post<LoginResponse>(APIRoute.Login, {email, password});
-      dispatch(setAuthorizationStatus(true));
-      dispatch(setLogin(data.email));
-      saveToken(data.token);
-    } catch (err) { /* empty */
-    }
+    const {data} = await api.post<LoginResponse>(APIRoute.Login, {email, password});
+    dispatch(setAuthorizationStatus(true));
+    dispatch(setLogin(data.email));
+    saveToken(data.token);
   },
 );

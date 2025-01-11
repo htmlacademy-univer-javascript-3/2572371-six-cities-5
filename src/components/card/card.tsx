@@ -18,7 +18,7 @@ type CardProps = {
 }
 
 function CardBase(props: CardProps): React.ReactElement {
-  const isAuthorized = useAppSelector((state) => state.authorizationStatus);
+  const isAuthorized = useAppSelector((state) => state.auth.authorizationStatus);
   return (
     <article className={`${props.IsFavorite ? 'favorites__card' : 'cities__card'} place-card`} onMouseOver={() => props.selectOffer(props.Id)}>
       {props.Premium && (

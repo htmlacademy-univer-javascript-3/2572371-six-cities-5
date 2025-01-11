@@ -1,11 +1,11 @@
 import useAppSelector from '../../hooks/use-app-selector.ts';
 import {useDispatch} from 'react-redux';
-import {setActiveCity} from '../../store/action.ts';
 import {memo} from 'react';
 import {cities} from '../../constants/cities.ts';
+import {setActiveCity} from '../../store/main-page/actions.ts';
 
 const List = () => {
-  const activeCity = useAppSelector((state) => state.currentCity);
+  const activeCity = useAppSelector((state) => state.main.currentCity);
   const dispatch = useDispatch();
 
   function onCityClick(city: string) {

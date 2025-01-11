@@ -8,7 +8,7 @@ type GuestRouteProps = {
 }
 
 function GuestRoute({children} : GuestRouteProps) {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector((state) => state.auth.authorizationStatus);
 
   return !authorizationStatus ? children : <Navigate to={AppRoutes.Main} />;
 }

@@ -11,10 +11,10 @@ import {NoOffers} from '../main-empty/no-offers.tsx';
 
 function MainPage() {
   const [activeCard, setActiveCard] = useState<string | null>(null);
-  const activeCity = useAppSelector((state) => state.currentCity);
-  const sortOption = useAppSelector((state) => state.sortOption);
-  const city = useAppSelector((state) => state.currentCity);
-  const offers = useAppSelector((state) => state.offers
+  const activeCity = useAppSelector((state) => state.main.currentCity);
+  const sortOption = useAppSelector((state) => state.main.sortOption);
+  const city = useAppSelector((state) => state.main.currentCity);
+  const offers = useAppSelector((state) => state.main.offers
     ?.filter((offer) => offer.city.name === city.name))
     ?.sort(sortOptions[sortOption]);
   const offersMap = offers && new Map(offers.map((offer) => [offer.id, offer]));
@@ -50,7 +50,7 @@ function MainPage() {
               </section>
               <div className="cities__right-section">
                 <section style={{alignSelf: 'stretch', width: '100%'}}>
-                  <MapComponent offers={offers} selectedOffer={offersMap!.get(activeCard!)}/>
+                  <MapComponent offersLocations={offers.map((x) => x.location)} selectedOfferLocation={offersMap!.get(activeCard!)?.location}/>
                 </section>
               </div>
             </div>

@@ -1,9 +1,8 @@
 import {Fragment, useCallback, useState} from 'react';
 import {sendReview} from '../../api/client.ts';
 import {useAppDispatch} from '../../store';
-import {useSelector} from 'react-redux';
-import {IState} from '../../store/reducer.ts';
-import {setReviewSending, setReviewSendingError} from '../../store/action.ts';
+import useAppSelector from '../../hooks/use-app-selector.ts';
+import {setReviewSending, setReviewSendingError} from '../../store/review/action.ts';
 
 type CommentFormState = {
   rating: number;
@@ -35,9 +34,9 @@ function CommentForm() {
   });
 
   const dispatch = useAppDispatch();
-  const currentOffer = useSelector((state: IState) => state.selectedOffer);
-  const sending = useSelector((state: IState) => state.isReviewSending);
-  const commentSendingError = useSelector((state: IState) => state.reviewSendingError);
+  const currentOffer = useAppSelector((state) => state.offer.selectedOffer);
+  const sending = useAppSelector((state) => state.review.isReviewSending);
+  const commentSendingError = useAppSelector((state) => state.review.reviewSendingError);
 
   const handleSubmit = useCallback(
     () => {

@@ -2,13 +2,13 @@ import {memo, useState} from 'react';
 import useAppSelector from '../../hooks/use-app-selector.ts';
 import {useDispatch} from 'react-redux';
 import SortOption from '../../types/sort-option.ts';
-import {setSortOption} from '../../store/action.ts';
+import {setSortOption} from '../../store/main-page/actions.ts';
 
 function SortOptionsBase() {
   const [hidden, setHidden] = useState(true);
 
   const dispatch = useDispatch();
-  const sortOption = useAppSelector((state) => state.sortOption);
+  const sortOption = useAppSelector((state) => state.main.sortOption);
 
   function onSortChosen(option: SortOption) {
     setHidden(true);
